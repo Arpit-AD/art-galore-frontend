@@ -7,3 +7,11 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+.gradient-maroonRed{
+  background: rgb(128,19,33);
+background: -moz-linear-gradient(90deg, rgba(128,19,33,1) 0%, rgba(90,10,20,1) 100%);
+background: -webkit-linear-gradient(90deg, rgba(128,19,33,1) 0%, rgba(90,10,20,1) 100%);
+background: linear-gradient(90deg, rgba(128,19,33,1) 0%, rgba(90,10,20,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#801321",endColorstr="#5a0a14",GradientType=1);
+}

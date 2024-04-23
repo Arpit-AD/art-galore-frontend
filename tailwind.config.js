@@ -5,15 +5,30 @@ module.exports = {
 		extend: {
 			colors: {
 				maroonRed: "#7f0a19",
-				dark: "#474747",
+				dark: "#666666",
 			},
 		},
+		fontSize: {
+			xxs: "0.6rem",
+			xs: "0.75rem",
+			sm: "0.8rem",
+			base: "0.99rem",
+			xl: "1.25rem",
+			"2xl": "1.563rem",
+			"3xl": "1.953rem",
+			"4xl": "2.441rem",
+
+			"5xl": "3.052rem",
+		},
 		screens: {
+			xs: "390px",
+			// => @media (min-width: 390px) { ... }
+
 			sm: "640px",
 			// => @media (min-width: 640px) { ... }
 
-			md: "768px",
-			// => @media (min-width: 768px) { ... }
+			md: "769px",
+			// => @media (min-width: 769px) { ... }
 
 			lg: "1024px",
 			// => @media (min-width: 1024px) { ... }

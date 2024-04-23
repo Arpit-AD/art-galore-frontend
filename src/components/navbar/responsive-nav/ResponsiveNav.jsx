@@ -5,14 +5,14 @@ function ResponsiveNav({ toggleNavbar, loggedInStatus }) {
 	return (
 		<span className="lg:hidden flex items-center sm:p-4 float-right space-x-6">
 			{loggedInStatus ? (
-				<RiAccountCircleFill className="inline sm:text-xl text-sm" />
+				<RiAccountCircleFill className="inline" />
 			) : (
-				<a className=" sm:text-xl text-sm" href="#">
+				<a className="" href="#">
 					Login
 				</a>
 			)}
 			<span
-				className="font-bold sm:text-xl text-sm"
+				className="font-bold"
 				onClick={() => {
 					toggleNavbar();
 				}}
