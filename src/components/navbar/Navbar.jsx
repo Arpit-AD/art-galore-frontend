@@ -3,22 +3,25 @@ import Logo from "../logo/Logo";
 import ResponsiveNav from "./responsive-nav/ResponsiveNav";
 import { RiAccountCircleFill } from "react-icons/ri";
 import CategoryList from "../common/category-list/CategoryList";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
 	const [responsiveNav, setResponsiveNav] = useState(false);
-	const [loggedInStatus, setLoggedInStatus] = useState(false);
+	const { isLoggedIn } = useSelector((state) => state.userReducer);
+	const navigate = useNavigate();
 	const toggleNavbar = () => {
 		setResponsiveNav((prev) => !prev);
 	};
 	return (
-		<nav className="lg:max-h-28 max-h-24 sticky top-0 text-dark shadow shadow-gray-300 bg-gray-50 lg:text-base sm:text-sm text-xs">
+		<nav className="lg:max-h-28 max-h-24 sticky top-0 text-dark shadow shadow-gray-300 bg-gray-50 lg:text-base sm:text-sm text-xs z-10">
 			<div className="z-10 p-2 lg:block flex items-center justify-between ">
 				<div className="lg:m-auto p-6 sm:w-fit w-1/2">
 					<Logo width={"180px"} />
 				</div>
 				<ResponsiveNav
 					toggleNavbar={toggleNavbar}
-					loggedInStatus={loggedInStatus}
+					loggedInStatus={isLoggedIn}
 				/>
 				<div className="lg:flex hidden justify-between xl:px-10 px-8">
 					<CategoryList
@@ -27,15 +30,22 @@ const Navbar = () => {
 							"hover:border-b-2 hover:text-black border-maroonRed border-solid"
 						}
 					/>
-					{!loggedInStatus ? (
-						<a
+					{!isLoggedIn ? (
+						<span
 							className="lg:flex hidden hover:border-b-2 hover:text-black text-gray-600 border-maroonRed border-solid"
-							href="/login"
+							onClick={() => {
+								navigate("/login");
+							}}
 						>
 							Login
-						</a>
+						</span>
 					) : (
-						<RiAccountCircleFill className=" text-xl" />
+						<RiAccountCircleFill
+							className=" text-3xl cursor-pointer hover:text-maroonRed"
+							onClick={() => {
+								navigate("/profile");
+							}}
+						/>
 					)}
 				</div>
 			</div>

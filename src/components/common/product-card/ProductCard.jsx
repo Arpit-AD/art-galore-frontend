@@ -9,7 +9,7 @@ const options = {
 	color: "rgba(20,20,20,0.1)",
 	activeColor: "tomato",
 	size: window.innerWidth < 600 ? 20 : 25,
-	value: 2.5,
+	value: 3.5,
 	isHalf: true,
 };
 
@@ -23,7 +23,8 @@ function ProductCard({ product }) {
 			<img src={product.images[0].url} alt={product.name} />
 			<div className="p-4">
 				<div className="flex items-center justify-between">
-					<ReactStars {...options} /> <span> (256 reviews) </span>
+					<ReactStars {...options} className="z-0" />{" "}
+					<span> (256 reviews) </span>
 				</div>
 				<div className="flex justify-between items-center">
 					<div>

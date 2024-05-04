@@ -9,7 +9,7 @@ function ProductList({ productList }) {
 					<ProductCard product={product} />
 				))}
 			</div>
-			<div className="flex flex-col lg:w-1/3 w-1/2 ">
+			<div className="lg:flex flex-col lg:w-1/3 w-1/2 ">
 				{" "}
 				{productList.map((product) => (
 					<ProductCard product={product} />
