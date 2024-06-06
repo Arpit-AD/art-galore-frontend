@@ -5,6 +5,10 @@ import Footer from "../../components/footer/Footer";
 import CategoryEnum from "../../data/categoryEnum.js";
 import ProductCard from "../../components/common/product-card/ProductCard.jsx";
 import ProductList from "../../components/common/product-list/ProductList.jsx";
+import Carousel from "../../components/carousel/Carousel.jsx";
+import { useNavigate } from "react-router-dom";
+import BannerPage from "../../components/banner-page/BannerPage.jsx";
+import ArtistPanel from "../../components/artist-panel/ArtistPanel.jsx";
 
 const product = {
 	_id: 1,
@@ -35,27 +39,6 @@ const productList = [
 			},
 		],
 	},
-	{
-		...product,
-		images: [
-			{
-				public_id: "product",
-				url: "https://i.pinimg.com/736x/e8/7e/57/e87e573baa9e0c489309f778ca7e6980--drawing-faces-expressive.jpg",
-			},
-		],
-	},
-	product,
-	product,
-
-	{
-		...product,
-		images: [
-			{
-				public_id: "product",
-				url: "https://th.bing.com/th/id/OIP.ObQwM6DN2opNkoUlj6cP-gHaEK?rs=1&pid=ImgDetMain",
-			},
-		],
-	},
 
 	{
 		...product,
@@ -69,18 +52,71 @@ const productList = [
 ];
 
 function Home() {
+	const navigate = useNavigate();
 	return (
-		<div>
-			<NewsBanner
-				news={
-					"New products available at 30% discounted price. Shipping worldwide"
-				}
+		<div className="bg-white min-h-screen m-1">
+			<Carousel
+				images={[
+					"https://res.cloudinary.com/dkb4cxn9b/image/upload/v1715626280/artGaloreCarousel/carousel-madhubani.png",
+					"https://res.cloudinary.com/dkb4cxn9b/image/upload/v1715536651/artGaloreCarousel/carousel-peacock.png",
+					"https://res.cloudinary.com/dkb4cxn9b/image/upload/v1715625000/artGaloreCarousel/carousel-puppets.png",
+				]}
 			/>
-			<Navbar />
-			<div className="bg-white">
+			<div>
+				{" "}
+				<div className="mt-12 mb-6 flex align-center justify-between font-semibold lg:text-3xl sm:text-2xl text-xl">
+					EVERYTHING YOU NEED
+					<button
+						className="lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base bg-maroonRed text-white hover:bg-gray-800 hover:text-white shadow-xl rounded-full md:text-base text-sm font-normal"
+						onClick={() => navigate("/all-products")}
+					>
+						View all
+					</button>
+				</div>
+				<div className="flex justify-between mx-2 my-6">
+					<button
+						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						onClick={() => {
+							console.log("new arrivals");
+						}}
+					>
+						New Arrivals
+					</button>
+					<button
+						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						onClick={() => {
+							console.log("Choose by colors");
+						}}
+					>
+						Choose by colors
+					</button>
+					<button
+						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						onClick={() => {
+							console.log("Choose by Category");
+						}}
+					>
+						Explore by Category
+					</button>
+					<button
+						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						onClick={() => {
+							console.log("Find by artist");
+						}}
+					>
+						Find by artist
+					</button>
+				</div>
 				<ProductList productList={productList} />
+				<hr className="mt-8"></hr>
+				<hr className="mt-1"></hr>
+				<div className="my-20">
+					<BannerPage />
+				</div>
+				<div className="my-20">
+					<ArtistPanel />
+				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 }

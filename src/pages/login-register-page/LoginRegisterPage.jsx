@@ -86,7 +86,13 @@ function LoginRegisterPage() {
 		<>
 			<Loader loading={loading} />
 			<div className="flex min-h-screen">
-				<div className="lg:w-1/2 md:block hidden gradient-maroonRed w-1/4"></div>
+				<div
+					className="bg-center bg-cover bg-no-repeat lg:w-1/2 md:block hidden w-1/4 shadow-2xl"
+					style={{
+						backgroundImage:
+							'url("https://res.cloudinary.com/dkb4cxn9b/image/upload/v1714839491/artGaloreCarousel/carousel-buddha_iwktip.jpg")',
+					}}
+				></div>
 				<div className="lg:w-1/2 md:w-3/4 bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:text-base sm:text-sm text-xs">
 					<div>
 						<div className="flex justify-center">

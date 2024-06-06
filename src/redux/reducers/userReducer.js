@@ -6,11 +6,13 @@ export const userReducer = (state = { user: [] }, action) => {
 		case UserConstants.REGISTER_USER_REQUEST:
 		case UserConstants.LOGOUT_REQUEST:
 		case UserConstants.LOAD_USER_REQUEST:
+		case UserConstants.UPDATE_PROFILE_REQUEST:
 			return { loading: true, isLoggedIn: false };
 		case UserConstants.LOGIN_SUCCESS:
 		case UserConstants.REGISTER_USER_SUCCESS:
 		case UserConstants.LOGOUT_FAIL:
-		case UserConstants.LOAD_USER_SUCCESS: {
+		case UserConstants.LOAD_USER_SUCCESS:
+		case UserConstants.UPDATE_PROFILE_SUCCESS: {
 			const userData = {
 				...state,
 				loading: false,
@@ -19,6 +21,8 @@ export const userReducer = (state = { user: [] }, action) => {
 			};
 			return userData;
 		}
+		case UserConstants.UPDATE_PROFILE_FAILURE:
+			return { loading: false, isLoggedIn: true, ...state };
 		case UserConstants.LOAD_USER_FAIL:
 			return {
 				...state,

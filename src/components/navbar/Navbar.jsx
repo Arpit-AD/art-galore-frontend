@@ -25,14 +25,14 @@ const Navbar = () => {
 				/>
 				<div className="lg:flex hidden justify-between xl:px-10 px-8">
 					<CategoryList
-						categoryListStyle={"lg:flex block lg:space-x-10 text-gray-600"}
+						categoryListStyle={"lg:flex block lg:space-x-10"}
 						itemStyle={
 							"hover:border-b-2 hover:text-black border-maroonRed border-solid"
 						}
 					/>
 					{!isLoggedIn ? (
 						<span
-							className="lg:flex hidden hover:border-b-2 hover:text-black text-gray-600 border-maroonRed border-solid"
+							className="lg:flex hidden hover:border-b-2 hover:text-black border-maroonRed border-solid cursor-pointer"
 							onClick={() => {
 								navigate("/login");
 							}}

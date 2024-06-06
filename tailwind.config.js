@@ -7,6 +7,9 @@ module.exports = {
 				maroonRed: "#7f0a19",
 				dark: "#666666",
 			},
+			spacing: {
+				128: "29rem",
+			},
 		},
 		fontSize: {
 			xxs: "0.6rem",

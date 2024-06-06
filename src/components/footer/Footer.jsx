@@ -31,16 +31,16 @@ function Footer() {
 					<div className="flex sm:flex-nowrap flex-wrap lg:space-x-32 xs:space-x-16 space-x-8 md:mt-auto mt-10 md: mx-auto">
 						<CategoryList
 							heading={"ART BY CATEGORY"}
-							headingStyle={"pb-3 font-bold text-gray-600"}
+							headingStyle={"pb-3 font-bold"}
 							itemStyle={
-								"lg:leading-7 leading-6 text-gray-600 cursor-pointer hover:text-black"
+								"lg:leading-7 leading-6 cursor-pointer hover:text-black"
 							}
 						/>
 						<div>
 							<ul>
-								<h2 className="pb-3 font-bold text-gray-600">ART BY PRICE</h2>
+								<h2 className="pb-3 font-bold">ART BY PRICE</h2>
 								{Object.values(PriceEnum).map((price) => (
-									<li className="lg:leading-7 leading-6 text-gray-600 cursor-pointer hover:text-black">
+									<li className="lg:leading-7 leading-6 cursor-pointer hover:text-black">
 										<a href={`#`}>{price}</a>
 									</li>
 								))}
@@ -48,9 +48,9 @@ function Footer() {
 						</div>
 						<div className="sm:flex hidden">
 							<ul>
-								<h2 className="pb-3 font-bold text-gray-600">ABOUT</h2>
+								<h2 className="pb-3 font-bold">ABOUT</h2>
 								{Object.values(AboutEnum).map((text) => (
-									<li className="lg:leading-7 leading-6 text-gray-600 cursor-pointer hover:text-black">
+									<li className="lg:leading-7 leading-6 cursor-pointer hover:text-black">
 										<a href={`#`}>{text}</a>
 									</li>
 								))}
@@ -59,7 +59,7 @@ function Footer() {
 					</div>
 				</div>
 				<hr className="h-0.5 bg-dark m-auto" />
-				<div className="h-6 w-fit m-auto ltext-gray-600 mt-2">
+				<div className="h-6 w-fit m-auto  mt-2">
 					<div>Copyright on @Art Galore limited 2024</div>
 				</div>
 			</div>

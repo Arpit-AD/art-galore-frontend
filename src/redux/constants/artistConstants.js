@@ -1,0 +1,8 @@
+const ArtistConstants = Object.freeze({
+	ALL_ARTIST_REQUEST: "ALL_ARTIST_REQUEST",
+	ALL_ARTIST_SUCCESS: "ALL_ARTIST_SUCCESS",
+	ALL_ARTIST_FAIL: "ALL_ARTIST_FAIL",
+	CLEAR_ERRORS: "CLEAR_ERRORS",
+});
+
+export default ArtistConstants;

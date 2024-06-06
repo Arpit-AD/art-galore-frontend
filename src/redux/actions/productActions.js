@@ -6,8 +6,7 @@ export const getProduct = () => async (dispatch) => {
 		dispatch({
 			type: ProductConstants.ALL_PRODUCT_REQUEST,
 		});
-		const data = await axios.get("api/v1/products");
-
+		const data = await axios.get("http://localhost:3000/api/v1/products");
 		dispatch({
 			type: ProductConstants.ALL_PRODUCT_SUCCESS,
 			payload: data,

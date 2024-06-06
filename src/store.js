@@ -3,10 +3,14 @@ import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { productReducer } from "./redux/reducers/productReducer";
 import { userReducer } from "./redux/reducers/userReducer";
+import { artistReducer } from "./redux/reducers/artistReducer";
+import { pageReducer } from "./redux/reducers/pageReducer";
 
 const reducer = combineReducers({
+	pageReducer,
 	productReducer,
 	userReducer,
+	artistReducer,
 });
 
 let initialState = {};

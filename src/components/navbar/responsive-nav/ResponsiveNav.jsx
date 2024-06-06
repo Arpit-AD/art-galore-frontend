@@ -24,7 +24,7 @@ function ResponsiveNav({ toggleNavbar, loggedInStatus }) {
 				</span>
 			)}
 			<span
-				className="font-bold"
+				className="font-black text-lg xl:text-3xl "
 				onClick={() => {
 					toggleNavbar();
 				}}

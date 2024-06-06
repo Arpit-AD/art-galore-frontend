@@ -1,17 +1,20 @@
 import ProductConstants from "../constants/productConstants";
 
-export const productReducer = (state = { products: [] }, action) => {
+export const productReducer = (
+	state = { products: [], productsCount: null },
+	action,
+) => {
 	switch (action.type) {
 		case ProductConstants.ALL_PRODUCT_REQUEST:
 			return {
 				loading: true,
-				product: [],
+				products: [],
 			};
 		case ProductConstants.ALL_PRODUCT_SUCCESS:
 			return {
 				loading: false,
-				product: action.payload.products,
-				productsCount: action.payload.productsCount,
+				products: action.payload.data._products,
+				productsCount: action.payload.data._productsCount,
 			};
 		case ProductConstants.ALL_PRODUCT_FAIL:
 			return {

@@ -3,6 +3,8 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { ImCross } from "react-icons/im";
 
 const options = {
 	edit: false,
@@ -14,11 +16,14 @@ const options = {
 };
 
 function ProductCard({ product }) {
+	const { actionMode } = useSelector((state) => state.pageReducer);
 	return (
 		<Link
 			// to={`/${product._id}`}
 			// className="basis-1/5 h-fit lg:text-base sm:text-sm text-xs m-2 bg-white rounded-lg overflow-hidden shadow-md flex-shrink-0"
-			className="m-2 lg:text-base sm:text-sm text-xs bg-white rounded-b-lg overflow-hidden shadow-md flex-shrink-0"
+			className={`m-2 lg:text-base sm:text-sm text-xs bg-white rounded-b-lg overflow-hidden border-2 border-gray-100 hover:shadow-md flex-shrink-0 ${
+				actionMode === "edit" ? "bg-zinc-100" : ""
+			}`}
 		>
 			<img src={product.images[0].url} alt={product.name} />
 			<div className="p-4">
@@ -35,10 +40,17 @@ function ProductCard({ product }) {
 					<p className="font-semibold text-xl"> ₹ {product.price}</p>
 				</div>
 				<div className="flex space-x-4  mt-2">
-					<button className="lg:text-base sm:text-sm text-xs w-1/2 py-2 hover:text-maroonRed bg-gray-200 text-gray-800 rounded-md transition duration-300 hover:bg-gray-300 appearance-none block px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:z-10 sm:text-sm">
+					<button className="lg:text-base sm:text-sm text-xs w-1/2 py-2 hover:text-maroonRed bg-gray-200 rounded-md transition duration-300 hover:bg-gray-300 appearance-none block px-3 py-2 border border-gray-300 rounded-md focus:z-10 sm:text-sm">
 						<FaHeart className="m-auto" />
 					</button>
-					<button className="lg:text-base sm:text-sm text-xs w-1/2 py-2 hover:text-maroonRed bg-gray-200 text-gray-800 rounded-md transition duration-300 hover:bg-gray-300 appearance-none block px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:z-10 sm:text-sm">
+					{actionMode === "edit" ? (
+						<button className="lg:text-base sm:text-sm text-xs w-1/2 py-2 hover:text-maroonRed bg-gray-200 rounded-md transition duration-300 hover:bg-gray-300 appearance-none block px-3 py-2 border border-gray-300 rounded-md focus:z-10 sm:text-sm">
+							<ImCross className="m-auto font-black" />
+						</button>
+					) : (
+						<></>
+					)}
+					<button className="lg:text-base sm:text-sm text-xs w-1/2 py-2 hover:text-maroonRed bg-gray-200 rounded-md transition duration-300 hover:bg-gray-300 appearance-none block px-3 py-2 border border-gray-300 rounded-md focus:z-10 sm:text-sm">
 						<FaShoppingCart className="m-auto" />
 					</button>
 				</div>

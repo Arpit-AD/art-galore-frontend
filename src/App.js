@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import React from "react";
 import store from "./store";
 import { loadUser } from "./redux/actions/userAction";
+import WrapperPage from "./pages/WrapperPage/WrapperPage";
 
 function App() {
 	React.useEffect(() => {
@@ -15,9 +16,30 @@ function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<WrapperPage Component={Home} />} />
 				<Route path="/login" element={<LoginRegisterPage />} />
-				<Route path="/profile" element={<ProfilePage />} />
+				<Route
+					path="/profile"
+					element={
+						<WrapperPage
+							Component={ProfilePage}
+							props={{ personalProfile: true }}
+						/>
+					}
+				/>
+				<Route
+					path="/edit/profile"
+					element={
+						<WrapperPage
+							Component={ProfilePage}
+							props={{ personalProfile: true }}
+						/>
+					}
+				/>
+				<Route
+					path="/user/:id"
+					element={<WrapperPage Component={ProfilePage} />}
+				/>
 			</Routes>
 			<ToastContainer
 				position="top-left"
