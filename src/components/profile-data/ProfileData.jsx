@@ -16,7 +16,11 @@ function ProfileData({
 }) {
 	const navigate = useNavigate();
 	if (!user) {
-		return <Loader loading={true} />;
+		return (
+			<div className="min-h-screen">
+				<Loader loading={!user} />
+			</div>
+		);
 	}
 	return (
 		<div>

@@ -13,9 +13,8 @@ function ProductPage({ create }) {
 		if (id) {
 			const fetchProduct = async () => {
 				try {
-					const { data } = await axios.get(
-						`http://localhost:3000/api/v1/product/${id}`,
-					);
+					debugger;
+					const { data } = await axios.get(`/api/v1/product/${id}`);
 					setProduct(data._product);
 				} catch (error) {
 					console.log(error);

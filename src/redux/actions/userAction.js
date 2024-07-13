@@ -8,7 +8,7 @@ export const login = (userData) => async (dispatch) => {
 		const config = { headers: { "Content-Type": "application/json" } };
 
 		const { data } = await axios.post(
-			"/api/v1/login",
+			`/api/v1/login`,
 			{ email: userData.email, password: userData.password },
 			config,
 		);
@@ -39,7 +39,7 @@ export const register = (userData) => async (dispatch) => {
 
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		const { data } = await axios.post("/api/v1/register", userData, config);
+		const { data } = await axios.post(`/api/v1/register`, userData, config);
 
 		toast.success("Registration Successful", {
 			position: "top-left",
@@ -67,7 +67,7 @@ export const logout = () => async (dispatch) => {
 
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		await axios.get("/api/v1/logout", config);
+		await axios.get(`/api/v1/logout`, config);
 
 		toast.success("Logout Successful", {
 			position: "top-left",
@@ -94,7 +94,7 @@ export const loadUser = () => async (dispatch) => {
 		dispatch({ type: UserConstants.LOAD_USER_REQUEST });
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		const { data } = await axios.get("/api/v1/profile");
+		const { data } = await axios.get(`/api/v1/profile`);
 
 		dispatch({ type: UserConstants.LOAD_USER_SUCCESS, payload: data });
 	} catch (error) {

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { FaCheckCircle } from "react-icons/fa";
 import UserConstants from "../../../redux/constants/userConstants";
+import { BACKEND_URL } from "../../../utils/route-util";
+import Loader from "../loader/Loader";
 
 function ArtistCard_II({ userId }) {
 	const dispatch = useDispatch();
@@ -12,14 +14,12 @@ function ArtistCard_II({ userId }) {
 		if (userId) {
 			const fetchUser = async () => {
 				try {
-					const { data } = await axios.get(
-						`http://localhost:3000/api/v1/user/${userId}`,
-					);
+					const { data } = await axios.get(`/api/v1/user/${userId}`);
 					setUser(data.user);
 				} catch (error) {
 					dispatch({
 						type: UserConstants.LOAD_USER_FAIL,
-						payload: error.response.data.message,
+						payload: error?.response?.data?.message,
 					});
 				}
 			};
@@ -28,7 +28,7 @@ function ArtistCard_II({ userId }) {
 	}, [userId, dispatch]);
 
 	if (!user) {
-		return <div>Loading...</div>;
+		return <Loader loading={!user} />;
 	}
 
 	return (

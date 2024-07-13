@@ -10,6 +10,7 @@ import { getProduct } from "../../redux/actions/productActions.js";
 import ColorComponent from "../../components/color-component/ColorComponent.jsx";
 import { arrayToObjectByKey } from "../../utils/products-utils.js";
 import CategoryComponent from "../../components/common/category-component/CategoryComponent.jsx";
+import { BACKEND_URL } from "../../utils/route-util.js";
 
 function Home() {
 	const navigate = useNavigate();
@@ -18,7 +19,6 @@ function Home() {
 	const [categoryObj, setCategoryObj] = useState({});
 	const { products } = useSelector((state) => state.productReducer);
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		if (!(products && products?.length)) {
 			dispatch(getProduct());
