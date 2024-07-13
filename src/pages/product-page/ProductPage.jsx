@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import ProductDetails from "../../components/product-details/ProductDetails";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../../utils/route-util";
 
 function ProductPage({ create }) {
 	const [product, setProduct] = useState(null);
@@ -11,7 +12,9 @@ function ProductPage({ create }) {
 		if (id) {
 			const fetchProduct = async () => {
 				try {
-					const { data } = await axios.get(`/api/v1/product/${id}`);
+					const { data } = await axios.get(
+						`${BACKEND_URL}/api/v1/product/${id}`,
+					);
 					setProduct(data._product);
 				} catch (error) {
 					console.log(error);
