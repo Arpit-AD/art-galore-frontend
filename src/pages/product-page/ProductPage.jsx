@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import ProductDetails from "../../components/product-details/ProductDetails";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 
 function ProductPage({ create }) {
 	const [product, setProduct] = useState(null);
 	const { id } = useParams();
-	const dispatch = useDispatch();
 	useEffect(() => {
 		if (id) {
 			const fetchProduct = async () => {
 				try {
-					debugger;
 					const { data } = await axios.get(`/api/v1/product/${id}`);
 					setProduct(data._product);
 				} catch (error) {
