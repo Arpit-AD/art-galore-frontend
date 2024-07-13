@@ -60,7 +60,7 @@ function ProductDetails({ create, productData }) {
 	};
 
 	if (!productData) {
-		return <Loader loading={true} />;
+		return <Loader loading={!productData} />;
 	}
 
 	return (

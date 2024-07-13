@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 export const getUserData = async (id) => {
 	let artistData = {};
 	try {
-		artistData = await axios.get(`http://localhost:3000/api/v1/user/${id}`);
+		artistData = await axios.get(`/api/v1/user/${id}`);
 	} catch (err) {
 		toast.error("Artist Failed to fetch", {
 			position: "top-left",
