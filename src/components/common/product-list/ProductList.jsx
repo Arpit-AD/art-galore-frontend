@@ -27,7 +27,7 @@ const ProductList = ({ productList, message }) => {
 			{productList.length ? (
 				<>
 					{sublists.map((sublist, index) => (
-						<div className="flex flex-col lg:w-1/3 w-1/2">
+						<div className="flex flex-col lg:w-1/3 w-1/2" key={index}>
 							{sublist.map((product, idx) => (
 								<ProductCard product={product} key={idx} />
 							))}

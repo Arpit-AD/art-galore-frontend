@@ -39,8 +39,11 @@ function Footer() {
 						<div>
 							<ul>
 								<h2 className="pb-3 font-bold">ART BY PRICE</h2>
-								{Object.values(PriceEnum).map((price) => (
-									<li className="lg:leading-7 leading-6 cursor-pointer hover:text-black">
+								{Object.values(PriceEnum).map((price, i) => (
+									<li
+										className="lg:leading-7 leading-6 cursor-pointer hover:text-black"
+										key={i}
+									>
 										<a href={`#`}>{price}</a>
 									</li>
 								))}
@@ -49,8 +52,11 @@ function Footer() {
 						<div className="sm:flex hidden">
 							<ul>
 								<h2 className="pb-3 font-bold">ABOUT</h2>
-								{Object.values(AboutEnum).map((text) => (
-									<li className="lg:leading-7 leading-6 cursor-pointer hover:text-black">
+								{Object.values(AboutEnum).map((text, i) => (
+									<li
+										className="lg:leading-7 leading-6 cursor-pointer hover:text-black"
+										key={i}
+									>
 										<a href={`#`}>{text}</a>
 									</li>
 								))}

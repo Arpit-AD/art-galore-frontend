@@ -10,8 +10,6 @@ import { getProduct } from "../../redux/actions/productActions.js";
 import ColorComponent from "../../components/color-component/ColorComponent.jsx";
 import { arrayToObjectByKey } from "../../utils/products-utils.js";
 import CategoryComponent from "../../components/common/category-component/CategoryComponent.jsx";
-import { BACKEND_URL } from "../../utils/route-util.js";
-
 function Home() {
 	const navigate = useNavigate();
 	const [filter, setFilter] = useState(null);

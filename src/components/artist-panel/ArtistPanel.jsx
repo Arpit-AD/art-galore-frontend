@@ -7,15 +7,13 @@ import { getArtists } from "../../redux/actions/artristAction";
 function ArtistPanel() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const [loadScreen, setLoadScreen] = useState(false);
 	const { artists } = useSelector((state) => state.artistReducer);
 
 	const [artistList, setArtistList] = useState([]);
 
 	useEffect(() => {
-		if (!artists && !loadScreen) {
+		if (!artists) {
 			dispatch(getArtists());
-			setLoadScreen(!loadScreen);
 		} else {
 			setArtistList(artists);
 		}
