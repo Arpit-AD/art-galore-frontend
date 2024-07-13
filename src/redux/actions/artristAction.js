@@ -1,3 +1,4 @@
+import { BACKEND_URL } from "../../utils/route-util";
 import ArtistConstants from "../constants/artistConstants";
 import axios from "axios";
 
@@ -7,7 +8,7 @@ export const getArtists = () => async (dispatch) => {
 			type: ArtistConstants.ALL_ARTIST_REQUEST,
 		});
 
-		const artistData = await axios.get(`/api/v1/artists`);
+		const artistData = await axios.get(`${BACKEND_URL}/api/v1/artists`);
 
 		dispatch({
 			type: ArtistConstants.ALL_ARTIST_SUCCESS,

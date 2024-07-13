@@ -1,6 +1,7 @@
 import axios from "axios";
 import UserConstants from "../constants/userConstants";
 import { toast } from "react-toastify";
+import { BACKEND_URL } from "../../utils/route-util";
 
 export const login = (userData) => async (dispatch) => {
 	try {
@@ -8,7 +9,7 @@ export const login = (userData) => async (dispatch) => {
 		const config = { headers: { "Content-Type": "application/json" } };
 
 		const { data } = await axios.post(
-			`/api/v1/login`,
+			`${BACKEND_URL}/api/v1/login`,
 			{ email: userData.email, password: userData.password },
 			config,
 		);
@@ -39,7 +40,11 @@ export const register = (userData) => async (dispatch) => {
 
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		const { data } = await axios.post(`/api/v1/register`, userData, config);
+		const { data } = await axios.post(
+			`${BACKEND_URL}/api/v1/register`,
+			userData,
+			config,
+		);
 
 		toast.success("Registration Successful", {
 			position: "top-left",
@@ -67,7 +72,7 @@ export const logout = () => async (dispatch) => {
 
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		await axios.get(`/api/v1/logout`, config);
+		await axios.get(`${BACKEND_URL}/api/v1/logout`, config);
 
 		toast.success("Logout Successful", {
 			position: "top-left",
@@ -94,7 +99,7 @@ export const loadUser = () => async (dispatch) => {
 		dispatch({ type: UserConstants.LOAD_USER_REQUEST });
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		const { data } = await axios.get(`/api/v1/profile`);
+		const { data } = await axios.get(`${BACKEND_URL}/api/v1/profile`);
 
 		dispatch({ type: UserConstants.LOAD_USER_SUCCESS, payload: data });
 	} catch (error) {
@@ -111,7 +116,7 @@ export const updateUser = (userData) => async (dispatch) => {
 		const config = { headers: { "Content-Type": "application/json" } };
 
 		const { data } = await axios.put(
-			`/api/v1/profile/${userData._id}`,
+			`${BACKEND_URL}/api/v1/profile/${userData._id}`,
 			userData,
 			config,
 		);
