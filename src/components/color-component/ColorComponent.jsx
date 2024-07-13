@@ -16,7 +16,7 @@ function ColorComponent() {
 				>
 					<div
 						className={`${
-							color.name == "White" || color.name == "Yellow"
+							color.name === "White" || color.name === "Yellow"
 								? ""
 								: "text-white"
 						}`}
