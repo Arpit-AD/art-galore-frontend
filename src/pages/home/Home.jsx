@@ -1,60 +1,43 @@
-import React from "react";
-import Navbar from "../../components/navbar/Navbar";
-import NewsBanner from "../../components/news-banner/NewsBanner";
-import Footer from "../../components/footer/Footer";
-import CategoryEnum from "../../data/categoryEnum.js";
-import ProductCard from "../../components/common/product-card/ProductCard.jsx";
+import React, { useEffect, useState } from "react";
 import ProductList from "../../components/common/product-list/ProductList.jsx";
 import Carousel from "../../components/carousel/Carousel.jsx";
 import { useNavigate } from "react-router-dom";
 import BannerPage from "../../components/banner-page/BannerPage.jsx";
 import ArtistPanel from "../../components/artist-panel/ArtistPanel.jsx";
-
-const product = {
-	_id: 1,
-	name: "Product 1",
-	description: "description for product 1",
-	price: 3000,
-	ratings: 4.5,
-	images: [
-		{
-			public_id: "product1_image1",
-			url: "https://i.pinimg.com/474x/9b/5f/15/9b5f15dbb5ee1def9b2f57e3bbb51628--art-flowers-flower-art.jpg",
-		},
-	],
-	category: CategoryEnum.DRAWING,
-	stock: 2,
-	numberOfReviews: 0,
-	reviews: [],
-	artist: "eJkaur",
-};
-
-const productList = [
-	{
-		...product,
-		images: [
-			{
-				public_id: "product",
-				url: "https://th.bing.com/th/id/OIP.ObQwM6DN2opNkoUlj6cP-gHaEK?rs=1&pid=ImgDetMain",
-			},
-		],
-	},
-
-	{
-		...product,
-		images: [
-			{
-				public_id: "product",
-				url: "https://i.pinimg.com/736x/e8/7e/57/e87e573baa9e0c489309f778ca7e6980--drawing-faces-expressive.jpg",
-			},
-		],
-	},
-];
+import { Helmet } from "react-helmet";
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../../redux/actions/productActions.js";
+import ColorComponent from "../../components/color-component/ColorComponent.jsx";
+import { arrayToObjectByKey } from "../../utils/products-utils.js";
+import CategoryComponent from "../../components/common/category-component/CategoryComponent.jsx";
 
 function Home() {
 	const navigate = useNavigate();
+	const [filter, setFilter] = useState(null);
+	const [productList, setProductList] = useState([]);
+	const [categoryObj, setCategoryObj] = useState({});
+	const { products } = useSelector((state) => state.productReducer);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!(products && products?.length)) {
+			dispatch(getProduct());
+		}
+	}, []);
+
+	useEffect(() => {
+		if (products && products?.length) {
+			setProductList(products);
+		}
+	}, [products]);
+
 	return (
 		<div className="bg-white min-h-screen m-1">
+			<Helmet>
+				<meta charSet="utf-8" />
+				<title>Home</title>
+				<link rel="icon" type="image/png" href="./logo.png" />
+			</Helmet>
 			<Carousel
 				images={[
 					"https://res.cloudinary.com/dkb4cxn9b/image/upload/v1715626280/artGaloreCarousel/carousel-madhubani.png",
@@ -64,7 +47,7 @@ function Home() {
 			/>
 			<div>
 				{" "}
-				<div className="mt-12 mb-6 flex align-center justify-between font-semibold lg:text-3xl sm:text-2xl text-xl">
+				<div className="mt-12 mb-6 flex align-center justify-between font-semibold lg:text-3xl sm:text-2xl text-xl xl:px-0 px-4">
 					EVERYTHING YOU NEED
 					<button
 						className="lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base bg-maroonRed text-white hover:bg-gray-800 hover:text-white shadow-xl rounded-full md:text-base text-sm font-normal"
@@ -75,50 +58,88 @@ function Home() {
 				</div>
 				<div className="flex justify-between mx-2 my-6">
 					<button
-						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						className={`basis-1/4 mx-1 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal ${
+							filter === "new" ? "border-maroonRed text-maroonRed" : ""
+						}`}
 						onClick={() => {
-							console.log("new arrivals");
+							if (filter !== "new") {
+								const _productList = [...productList];
+								const sortedProductsDesc = _productList.sort(
+									(a, b) => new Date(b.createdDate) - new Date(a.createdDate),
+								);
+								setProductList(sortedProductsDesc);
+								setFilter("new");
+							} else {
+								setProductList(products);
+								setFilter("");
+							}
 						}}
 					>
 						New Arrivals
 					</button>
 					<button
-						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						className={`basis-1/4 mx-1 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal ${
+							filter === "color" ? "border-maroonRed text-maroonRed" : ""
+						}`}
 						onClick={() => {
-							console.log("Choose by colors");
+							if (filter !== "color") setFilter("color");
+							else setFilter("");
 						}}
 					>
 						Choose by colors
 					</button>
 					<button
-						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						className={`basis-1/4 mx-1 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal ${
+							filter === "category" ? "border-maroonRed text-maroonRed" : ""
+						}`}
 						onClick={() => {
-							console.log("Choose by Category");
+							if (filter !== "category") {
+								setFilter("category");
+								const _obj = arrayToObjectByKey(productList, "category");
+								setCategoryObj(_obj);
+							} else setFilter("");
 						}}
 					>
 						Explore by Category
 					</button>
 					<button
-						className="basis-1/5 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal"
+						className={`basis-1/4 mx-1 lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base border-2 rounded-md md:text-base text-sm font-normal ${
+							filter === "artist" ? "border-maroonRed text-maroonRed" : ""
+						}`}
 						onClick={() => {
-							console.log("Find by artist");
+							setFilter("artist");
+							navigate("/all-products");
 						}}
 					>
 						Find by artist
 					</button>
 				</div>
-				<ProductList productList={productList} />
+				{!filter || filter === "new" ? (
+					<ProductComponent productList={productList} />
+				) : (
+					<></>
+				)}
+				{filter === "color" ? <ColorComponent /> : <></>}
+				{filter === "category" ? (
+					<CategoryComponent categoryObj={categoryObj} />
+				) : (
+					<></>
+				)}
 				<hr className="mt-8"></hr>
 				<hr className="mt-1"></hr>
-				<div className="my-20">
+				<div className="lg:my-20 my-8">
 					<BannerPage />
 				</div>
-				<div className="my-20">
+				<div className="sm:my-20 my-4">
 					<ArtistPanel />
 				</div>
 			</div>
 		</div>
 	);
 }
+
+const ProductComponent = ({ productList }) => {
+	return <ProductList productList={productList.slice(0, 6)} />;
+};
 
 export default Home;

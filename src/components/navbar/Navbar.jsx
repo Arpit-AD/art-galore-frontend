@@ -4,12 +4,15 @@ import ResponsiveNav from "./responsive-nav/ResponsiveNav";
 import { RiAccountCircleFill } from "react-icons/ri";
 import CategoryList from "../common/category-list/CategoryList";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RiLogoutCircleFill } from "react-icons/ri";
+import { logout } from "../../redux/actions/userAction";
 
 const Navbar = () => {
 	const [responsiveNav, setResponsiveNav] = useState(false);
 	const { isLoggedIn } = useSelector((state) => state.userReducer);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const toggleNavbar = () => {
 		setResponsiveNav((prev) => !prev);
 	};
@@ -40,12 +43,20 @@ const Navbar = () => {
 							Login
 						</span>
 					) : (
-						<RiAccountCircleFill
-							className=" text-3xl cursor-pointer hover:text-maroonRed"
-							onClick={() => {
-								navigate("/profile");
-							}}
-						/>
+						<div className="flex">
+							<RiAccountCircleFill
+								className=" text-3xl cursor-pointer hover:text-maroonRed mx-2"
+								onClick={() => {
+									navigate("/profile");
+								}}
+							/>
+							<RiLogoutCircleFill
+								className=" text-3xl cursor-pointer hover:text-maroonRed mx-2"
+								onClick={() => {
+									dispatch(logout());
+								}}
+							/>
+						</div>
 					)}
 				</div>
 			</div>

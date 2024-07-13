@@ -22,7 +22,7 @@ function WrapperPage({ Component, props }) {
 				}
 			/>
 			<Navbar />
-			<div className="xl:w-3/4 w-full m-auto">
+			<div className="xl:w-4/5 w-full m-auto">
 				<Component {...props} />
 			</div>
 			<Footer />

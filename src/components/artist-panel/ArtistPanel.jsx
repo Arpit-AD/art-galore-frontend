@@ -17,11 +17,11 @@ function ArtistPanel() {
 		} else {
 			setArtistList(artists);
 		}
-	}, [artists]);
+	}, [artists, dispatch]);
 
 	return (
 		<div>
-			<div className="mt-12 mb-6 flex align-center justify-between font-semibold  lg:text-3xl sm:text-2xl text-xl">
+			<div className="lg:mt-12 mb-6 flex align-center justify-between font-semibold  lg:text-3xl sm:text-2xl text-xl xl:px-0 px-4">
 				MEET OUR ARTISTS
 				<button
 					className="lg:px-3 lg:py-4 sm:px-2 sm:py-3 p-1 text-base bg-maroonRed text-white hover:bg-gray-800 hover:text-white shadow-xl rounded-full md:text-base text-sm font-normal"

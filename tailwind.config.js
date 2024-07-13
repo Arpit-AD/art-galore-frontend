@@ -24,7 +24,7 @@ module.exports = {
 			"5xl": "3.052rem",
 		},
 		screens: {
-			xs: "390px",
+			xs: "396px",
 			// => @media (min-width: 390px) { ... }
 
 			sm: "640px",
@@ -33,7 +33,7 @@ module.exports = {
 			md: "769px",
 			// => @media (min-width: 769px) { ... }
 
-			lg: "1024px",
+			lg: "1025px",
 			// => @media (min-width: 1024px) { ... }
 
 			xl: "1280px",

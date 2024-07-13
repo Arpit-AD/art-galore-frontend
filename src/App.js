@@ -8,6 +8,8 @@ import React from "react";
 import store from "./store";
 import { loadUser } from "./redux/actions/userAction";
 import WrapperPage from "./pages/WrapperPage/WrapperPage";
+import ProductPage from "./pages/product-page/ProductPage";
+import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
 
 function App() {
 	React.useEffect(() => {
@@ -15,6 +17,7 @@ function App() {
 	}, []);
 	return (
 		<Router>
+			<ScrollToTop />
 			<Routes>
 				<Route path="/" element={<WrapperPage Component={Home} />} />
 				<Route path="/login" element={<LoginRegisterPage />} />
@@ -28,6 +31,18 @@ function App() {
 					}
 				/>
 				<Route
+					path="/product/create"
+					element={
+						<WrapperPage Component={ProductPage} props={{ create: true }} />
+					}
+				/>
+				<Route
+					path="/product/:id"
+					element={
+						<WrapperPage Component={ProductPage} props={{ create: false }} />
+					}
+				/>
+				<Route
 					path="/edit/profile"
 					element={
 						<WrapperPage
@@ -37,7 +52,7 @@ function App() {
 					}
 				/>
 				<Route
-					path="/user/:id"
+					path="/profile/:id"
 					element={<WrapperPage Component={ProfilePage} />}
 				/>
 			</Routes>

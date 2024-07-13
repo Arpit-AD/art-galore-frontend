@@ -14,7 +14,7 @@ export const getProduct = () => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: ProductConstants.ALL_PRODUCT_FAIL,
-			payload: error.response.data.message,
+			payload: error?.response?.data.message,
 		});
 	}
 };

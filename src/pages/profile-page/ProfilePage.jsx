@@ -7,6 +7,8 @@ import ProductList from "../../components/common/product-list/ProductList";
 import { getProduct } from "../../redux/actions/productActions";
 import { updateUser } from "../../redux/actions/userAction";
 import { getArtists } from "../../redux/actions/artristAction";
+import { Helmet } from "react-helmet";
+
 function ProfilePage({ personalProfile }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -91,7 +93,11 @@ function ProfilePage({ personalProfile }) {
 
 	return (
 		<div>
-			<div className="mt-12 mb-6 flex align-center justify-between font-semibold  lg:text-3xl sm:text-2xl text-xl">
+			<Helmet>
+				<meta charSet="utf-8" />
+				<title>{userData ? userData?.name : "Proile Page"}</title>
+			</Helmet>
+			<div className="mt-12 mb-6 flex align-center justify-between font-semibold  lg:text-3xl sm:text-2xl text-xl xl:px-0 px-4">
 				ARTIST PROFILE
 			</div>
 			<div>
@@ -107,9 +113,19 @@ function ProfilePage({ personalProfile }) {
 				/>
 			</div>
 			{artistPage ? (
-				<div>
-					<div className="mt-12 mb-6 flex align-center justify-between font-semibold  lg:text-3xl sm:text-2xl text-xl">
-						ARTWORKS
+				<div className="xl:px-0 px-4">
+					<div className="flex mt-12 mb-6 items-center justify-between ">
+						<span className="font-semibold  lg:text-3xl sm:text-2xl text-xl">
+							ARTWORKS
+						</span>
+						<span>
+							<button
+								className="px-4 py-1 bg-maroonRed text-white  hover:bg-gray-800 hover:text-white shadow-xl rounded-full font-semibold md:text-xl text-md font-bold"
+								onClick={() => navigate("/product/create")}
+							>
+								+
+							</button>
+						</span>
 					</div>
 					{artworks?.length ? (
 						<div className="my-8">

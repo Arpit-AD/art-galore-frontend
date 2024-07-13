@@ -8,19 +8,23 @@ function ArtistCard({ artist, index }) {
 
 	return (
 		<div
-			className="basis-1/6 cursor-pointer"
+			className="lg:basis-1/6 basis-1/3 cursor-pointer flex justify-center "
 			onClick={() => {
-				let url = `/user/${artist?._id}`;
+				let url = `/profile/${artist?._id}`;
 				if (artist?._id === user?.user?._id) url = "/profile";
 				navigate(url);
 			}}
 		>
-			<img
-				src={artist.avatar.url}
-				alt={`artist-${index}`}
-				className=" w-40 h-40 rounded-lg shadow-xl p-0.5 object-cover hover:border-2 border-maroonRed shaadow-sm"
-			></img>
-			<div className="py-2">{artist.name}</div>
+			<div>
+				<img
+					src={artist.avatar.url}
+					alt={`artist-${index}`}
+					className=" sm:w-40 sm:h-40 w-24 h-24 rounded-lg shadow-xl p-0.5 object-cover hover:border-2 border-maroonRed shaadow-sm m-auto"
+				></img>
+				<div className="py-2 md:text-base sx:text-sm text-xs font-normal m-auto">
+					{artist.name}
+				</div>
+			</div>
 		</div>
 	);
 }
