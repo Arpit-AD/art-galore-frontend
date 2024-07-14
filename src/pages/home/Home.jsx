@@ -17,6 +17,7 @@ function Home() {
 	const [categoryObj, setCategoryObj] = useState({});
 	const { products } = useSelector((state) => state.productReducer);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (!(products && products?.length)) {
 			dispatch(getProduct());

@@ -93,14 +93,13 @@ function LoginRegisterPage() {
 							'url("https://res.cloudinary.com/dkb4cxn9b/image/upload/v1714839491/artGaloreCarousel/carousel-buddha_iwktip.jpg")',
 					}}
 				></div>
-				<div className="lg:w-1/2 md:w-3/4 bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:text-base sm:text-sm text-xs">
+				<div className="lg:w-1/2 md:w-3/4 w-full bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:text-base sm:text-sm text-xs">
 					<div>
 						<div className="flex justify-center">
 							<Logo />
 						</div>
-						<div className="mt-8 text-dark font-semibold lg:w-2/3 xs:w-1/2 w-full m-auto text-center">
-							Empowering Artistry: Buy, Sell, and Embrace a World of
-							Photography, Prints, Sculptures, Paintings, Drawings, and Beyond!
+						<div className="mt-4 text-dark font-semibold lg:w-2/3 xs:w-1/2 w-full m-auto text-center">
+							Empower Artistry: Buy, Sell, and Embrace an Abundance of Art
 						</div>
 					</div>
 
