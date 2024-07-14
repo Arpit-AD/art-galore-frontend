@@ -7,7 +7,7 @@ export const login = (userData) => async (dispatch) => {
 	try {
 		dispatch({ type: UserConstants.LOGIN_REQUEST });
 		const config = {
-			withCredentials: true,
+			// withCredentials: true,
 			headers: { "Content-Type": "application/json" },
 		};
 
