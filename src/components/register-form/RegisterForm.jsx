@@ -13,15 +13,15 @@ const RegisterForm = ({
 	};
 
 	return (
-		<div className="md:mt-4 mt-10 mb-4 flex items-center justify-center">
+		<div className="md:mt-4 md:mb-2 mb-4 flex items-center justify-center">
 			<div className="max-w-md w-full space-y-8">
 				<div>
-					<h2 className="mt-6 text-center md:text-3xl text-xl font-extrabold">
+					<h2 className="mt-2 text-center md:text-xl text-2xl font-extrabold">
 						Create an account
 					</h2>
 				</div>
 				<form
-					className="mt-8 space-y-6"
+					className="md:mt-1 mt-8 space-y-3"
 					ref={(refF) => {
 						form.current = refF;
 					}}
@@ -79,7 +79,7 @@ const RegisterForm = ({
 								name="password"
 								type="password"
 								required
-								className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-b-md focus:outline-none focus:ring-maroonRed focus:border-maroonRed focus:z-10 sm:text-sm"
+								className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 focus:outline-none focus:ring-maroonRed focus:border-maroonRed focus:z-10 sm:text-sm"
 								placeholder="Password"
 							/>
 						</div>

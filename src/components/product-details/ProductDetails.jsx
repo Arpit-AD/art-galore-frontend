@@ -44,7 +44,7 @@ function ProductDetails({ create, productData }) {
 		if (!(products && products?.length)) {
 			dispatch(getProduct());
 		}
-	}, [products, dispatch]);
+	}, []);
 
 	const getOptions = () => {
 		const opt = {
@@ -68,7 +68,7 @@ function ProductDetails({ create, productData }) {
 			{create ? (
 				<form>form</form>
 			) : (
-				<div className="my-8">
+				<div className="my-8 md:text-base text-sm">
 					<img
 						src={`${
 							productData?.images[0]?.url
@@ -78,99 +78,105 @@ function ProductDetails({ create, productData }) {
 						alt=""
 						className="mb-8 mx-auto"
 					/>
-					<div>
+					<div className="lg:m-0 sm:mx-4 mx-2">
+						<div>
+							<div className="my-8 sm:text-left text-center">
+								<div className="md:text-3xl md:text-2xl text-xl font-semibold">
+									{productData?.name}
+								</div>
+								<div className="sm:flex  items-center justify-between">
+									<div className="md:text-3xl ms:text-2xl text-xl">
+										₹{" "}
+										{formatNumberToINR(
+											productData?.price ? productData.price : 0,
+										)}
+									</div>
+									<div className="sm:flex text-center">
+										<button
+											className="border-2 rounded-lg py-2 px-6 font-semibold text-gray-500 border-gray-300 bg-white mx-1"
+											onClick={handleCopyUrl}
+										>
+											<FaCopy className="m-auto" />
+										</button>
+										<button className="border-2 rounded-lg py-2 px-6 font-semibold text-gray-500 border-gray-300 bg-white mx-1">
+											<FaHeart className="m-auto" />
+										</button>
+										<button className=" mt-3 border-2 border-maroonRed rounded-lg sm:py-2 py-1 sm:px-6 px-2 font-semibold bg-maroonRed text-white mx-1">
+											<div className="flex">
+												<FaShoppingCart className="m-auto" />{" "}
+												<span className="ml-2">Buy</span>
+											</div>
+										</button>
+									</div>
+								</div>
+							</div>
+							<hr className="my-1" />
+							<hr className="my-1" />
+							<div className="my-8 sm:flex justify-between items-center">
+								<div className="basis-1/2 leading-10 mx-4">
+									<div className="md:text-xl text-base font-semibold underline">
+										Specifications
+									</div>
+									<ul className="md:text-base text-sm">
+										<li className="flex">
+											<div className="basis-1/2">Category:</div>
+											<div className="basis-1/2">{productData?.category}</div>
+										</li>{" "}
+										<hr />
+										<li className="flex">
+											<div className="basis-1/2">Created on:</div>
+											<div className="basis-1/2">
+												{formatDate(productData?.createdDate)}
+											</div>
+										</li>{" "}
+										<hr />
+										<li className="flex">
+											<div className="basis-1/2">Sold By:</div>
+											<div className="basis-1/2">{productData?.artist}</div>
+										</li>{" "}
+										<hr />
+										<li className="flex">
+											<div className="basis-1/2">Stock:</div>
+											<div className="basis-1/2">{productData?.stock}</div>
+										</li>{" "}
+										<hr />
+										<li className="flex">
+											<div className="basis-1/2">Rating:</div>
+											<div className="basis-1/2">
+												<ReactStars key={starKey} {...getOptions()} />
+											</div>
+										</li>{" "}
+										<hr />
+										<li className="flex">
+											<div className="basis-1/2">Shipping Available:</div>
+											<div className="basis-1/2">Yes</div>
+										</li>
+										<hr />
+									</ul>
+								</div>
+								<div className="basis-1/2 mx-4 sm:my-0 my-6">
+									<ArtistCard_II userId={productData?.user} />{" "}
+								</div>
+							</div>
+							<div className="my-8 mx-4 md:text-base text-sm">
+								<div className="md:text-xl text-base font-semibold underline">
+									Description
+								</div>
+								<p className="my-4">{productData?.description}</p>
+							</div>
+						</div>
+						<hr className="my-1" />
+						<hr className="my-1" />
 						<div className="my-8">
-							<div className="text-3xl font-semibold">{productData?.name}</div>
-							<div className="flex items-center justify-between">
-								<div className="text-3xl">
-									₹{" "}
-									{formatNumberToINR(
-										productData?.price ? productData.price : 0,
-									)}
-								</div>
-								<div className="flex">
-									<button
-										className="border-2 border-maroonRed rounded-lg py-2 px-6 font-semibold text-maroonRed bg-white mx-1"
-										onClick={handleCopyUrl}
-									>
-										<FaCopy className="m-auto" />
-									</button>
-									<button className="border-2 border-maroonRed rounded-lg py-2 px-6 font-semibold text-gray-400 bg-white mx-1">
-										<FaHeart className="m-auto" />
-									</button>
-									<button className="border-2 border-maroonRed rounded-lg py-2 px-6 font-semibold bg-maroonRed text-white flex mx-1">
-										<FaShoppingCart className="m-auto" />{" "}
-										<span className="ml-2">Buy</span>
-									</button>
-								</div>
+							<div className="md:text-xl text-base font-semibold underline">
+								Other products from artist
 							</div>
-						</div>
-						<hr className="my-1" />
-						<hr className="my-1" />
-						<div className="my-8 flex justify-between items-center">
-							<div className="basis-1/2 leading-10 mx-4">
-								<div className="lg:text-xl text-base font-semibold underline">
-									Specifications
-								</div>
-								<ul className=" ">
-									<li className="flex">
-										<div className="basis-1/2">Category:</div>
-										<div className="basis-1/2">{productData?.category}</div>
-									</li>{" "}
-									<hr />
-									<li className="flex">
-										<div className="basis-1/2">Created on:</div>
-										<div className="basis-1/2">
-											{formatDate(productData?.createdDate)}
-										</div>
-									</li>{" "}
-									<hr />
-									<li className="flex">
-										<div className="basis-1/2">Sold By:</div>
-										<div className="basis-1/2">{productData?.artist}</div>
-									</li>{" "}
-									<hr />
-									<li className="flex">
-										<div className="basis-1/2">Stock:</div>
-										<div className="basis-1/2">{productData?.stock}</div>
-									</li>{" "}
-									<hr />
-									<li className="flex">
-										<div className="basis-1/2">Rating:</div>
-										<div className="basis-1/2">
-											<ReactStars key={starKey} {...getOptions()} />
-										</div>
-									</li>{" "}
-									<hr />
-									<li className="flex">
-										<div className="basis-1/2">International shipping:</div>
-										<div className="basis-1/2">Yes</div>
-									</li>
-									<hr />
-								</ul>
+							<div className="my-4">
+								<ProductList
+									productList={productList}
+									message={"No new products from artist"}
+								/>
 							</div>
-							<div className="basis-1/2 mx-4">
-								<ArtistCard_II userId={productData?.user} />{" "}
-							</div>
-						</div>
-						<div className="my-8 mx-4">
-							<div className="lg:text-xl text-base font-semibold underline">
-								Description
-							</div>
-							<p className="my-4">{productData?.description}</p>
-						</div>
-					</div>
-					<hr className="my-1" />
-					<hr className="my-1" />
-					<div className="my-8">
-						<div className="lg:text-xl text-base font-semibold underline">
-							Other products from artist
-						</div>
-						<div className="my-4">
-							<ProductList
-								productList={productList}
-								message={"No other products from artist"}
-							/>
 						</div>
 					</div>
 				</div>

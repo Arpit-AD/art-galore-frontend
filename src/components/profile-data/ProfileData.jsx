@@ -2,7 +2,6 @@ import React from "react";
 import { FaShareAlt, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MdSaveAs } from "react-icons/md";
-import Loader from "../common/loader/Loader";
 
 function ProfileData({
 	user,
@@ -15,13 +14,7 @@ function ProfileData({
 	registerProfileChange,
 }) {
 	const navigate = useNavigate();
-	if (!user) {
-		return (
-			<div className="min-h-screen">
-				<Loader loading={!user} />
-			</div>
-		);
-	}
+
 	return (
 		<div>
 			{" "}

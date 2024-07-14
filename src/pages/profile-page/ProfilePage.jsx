@@ -8,6 +8,7 @@ import { getProduct } from "../../redux/actions/productActions";
 import { updateUser } from "../../redux/actions/userAction";
 import { getArtists } from "../../redux/actions/artristAction";
 import { Helmet } from "react-helmet";
+import Loader from "../../components/common/loader/Loader";
 
 function ProfilePage({ personalProfile }) {
 	const dispatch = useDispatch();
@@ -39,7 +40,7 @@ function ProfilePage({ personalProfile }) {
 		}
 
 		dispatch(updateUser(__userData));
-		dispatch(getArtists());
+		// dispatch(getArtists());
 
 		navigate("/profile");
 	};
@@ -90,6 +91,14 @@ function ProfilePage({ personalProfile }) {
 			if (user?.user?.role === "artist") setArtistPage(true);
 		}
 	}, [personalProfile, user]);
+
+	if (!userData) {
+		return (
+			<div className="min-h-screen">
+				<Loader loading={!user} />
+			</div>
+		);
+	}
 
 	return (
 		<div>

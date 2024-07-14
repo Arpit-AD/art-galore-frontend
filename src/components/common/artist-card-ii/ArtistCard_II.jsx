@@ -43,7 +43,7 @@ function ArtistCard_II({ userId }) {
 				/>
 			</div>
 			<div className="text-center mt-4">
-				<h2 className="text-xl font-semibold">{user.name}</h2>
+				<h2 className="md:text-xl text-base font-semibold">{user.name}</h2>
 				<p className="text-gray-600">{user.location}</p>
 				<a href={`/profile/${userId}`} className="text-red-500">
 					View Profile
@@ -51,7 +51,16 @@ function ArtistCard_II({ userId }) {
 			</div>
 			<div className="px-6 py-4">
 				<h3 className="text-lg font-bold">About Artist</h3>
-				<p className="text-gray-700 text-sm">
+				<p
+					className="text-gray-700 text-sm"
+					style={{
+						display: "-webkit-box",
+						WebkitBoxOrient: "vertical",
+						WebkitLineClamp: 4 /* Number of lines to show */,
+						overflow: "hidden",
+						textOverflow: "ellipsis",
+					}}
+				>
 					{user.description ? (
 						user.description
 					) : (

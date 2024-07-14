@@ -17,7 +17,7 @@ const Carousel = ({ images }) => {
 
 	return (
 		<div className="relative  m-auto mt-10 lg:text-base sm:text-sm text-xs">
-			<div className="xl:h-128 md:h-96 sm:h-64 h-48 overflow-hidden w-full flex justify-center align-center p-4 bg-gray-00  shadow-xl">
+			<div className="xl:h-128 md:h-96 sm:h-64 h-48 overflow-hidden w-full flex justify-center align-center p-4 bg-gray-00  xl:shadow-xl">
 				<img
 					src={images[currentImage]}
 					alt="Carousel"
