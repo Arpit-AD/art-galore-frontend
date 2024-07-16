@@ -1,17 +1,15 @@
-import axios from "axios";
 import UserConstants from "../constants/userConstants";
 import { toast } from "react-toastify";
-import { BACKEND_URL } from "../../utils/route-util";
+import axiosInstance, { BACKEND_URL } from "../../utils/route-util";
 
 export const login = (userData) => async (dispatch) => {
 	try {
 		dispatch({ type: UserConstants.LOGIN_REQUEST });
 		const config = {
-			// withCredentials: true,
 			headers: { "Content-Type": "application/json" },
 		};
 
-		const response = await axios.post(
+		const response = await axiosInstance.post(
 			`${BACKEND_URL}/api/v1/login`,
 			{ email: userData.email, password: userData.password },
 			config,
@@ -26,7 +24,7 @@ export const login = (userData) => async (dispatch) => {
 			progress: undefined,
 			theme: "light",
 		});
-
+		localStorage.setItem("token", response.data.token);
 		dispatch({ type: UserConstants.LOGIN_SUCCESS, payload: response.data });
 	} catch (error) {
 		dispatch({
@@ -42,7 +40,7 @@ export const register = (userData) => async (dispatch) => {
 
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		const { data } = await axios.post(
+		const { data } = await axiosInstance.post(
 			`${BACKEND_URL}/api/v1/register`,
 			userData,
 			config,
@@ -74,8 +72,9 @@ export const logout = () => async (dispatch) => {
 
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		await axios.get(`${BACKEND_URL}/api/v1/logout`, config);
+		await axiosInstance.get(`${BACKEND_URL}/api/v1/logout`, config);
 
+		localStorage.removeItem("token");
 		toast.success("Logout Successful", {
 			position: "top-left",
 			autoClose: 5000,
@@ -98,12 +97,15 @@ export const logout = () => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
 	try {
-		dispatch({ type: UserConstants.LOAD_USER_REQUEST });
-		const config = { headers: { "Content-Type": "application/json" } };
+		const token = localStorage.getItem("token");
+		if (token) {
+			dispatch({ type: UserConstants.LOAD_USER_REQUEST });
+			const config = { headers: { "Content-Type": "application/json" } };
 
-		const { data } = await axios.get(`${BACKEND_URL}/api/v1/profile`);
+			const { data } = await axiosInstance.get(`${BACKEND_URL}/api/v1/profile`);
 
-		dispatch({ type: UserConstants.LOAD_USER_SUCCESS, payload: data });
+			dispatch({ type: UserConstants.LOAD_USER_SUCCESS, payload: data });
+		}
 	} catch (error) {
 		dispatch({
 			type: UserConstants.LOAD_USER_FAIL,
@@ -117,7 +119,7 @@ export const updateUser = (userData) => async (dispatch) => {
 		dispatch({ type: UserConstants.UPDATE_PROFILE_REQUEST });
 		const config = { headers: { "Content-Type": "application/json" } };
 
-		const { data } = await axios.put(
+		const { data } = await axiosInstance.put(
 			`${BACKEND_URL}/api/v1/profile/${userData._id}`,
 			userData,
 			config,
