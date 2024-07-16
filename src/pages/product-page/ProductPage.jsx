@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import ProductDetails from "../../components/product-details/ProductDetails";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { BACKEND_URL } from "../../utils/route-util";
+import axiosInstance, { BACKEND_URL } from "../../utils/route-util";
 
 function ProductPage({ create }) {
 	const [product, setProduct] = useState(null);
@@ -12,7 +11,7 @@ function ProductPage({ create }) {
 		if (id) {
 			const fetchProduct = async () => {
 				try {
-					const { data } = await axios.get(
+					const { data } = await axiosInstance.get(
 						`${BACKEND_URL}/api/v1/product/${id}`,
 					);
 					setProduct(data._product);

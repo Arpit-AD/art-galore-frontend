@@ -7,9 +7,9 @@ import { ToastContainer } from "react-toastify";
 import React from "react";
 import store from "./store";
 import { loadUser } from "./redux/actions/userAction";
-import WrapperPage from "./pages/WrapperPage/WrapperPage";
 import ProductPage from "./pages/product-page/ProductPage";
 import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
+import WrapperPage from "./pages/wrapper-page/WrapperPage";
 
 function App() {
 	React.useEffect(() => {

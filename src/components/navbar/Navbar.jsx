@@ -54,6 +54,7 @@ const Navbar = () => {
 								className=" text-3xl cursor-pointer hover:text-maroonRed mx-2"
 								onClick={() => {
 									dispatch(logout());
+									navigate("/");
 								}}
 							/>
 						</div>
