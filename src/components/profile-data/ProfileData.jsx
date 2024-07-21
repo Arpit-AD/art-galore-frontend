@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaShareAlt, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MdSaveAs } from "react-icons/md";
+import { handleCopyUrl } from "../../utils/common-utils";
+import {
+	followUser,
+	isUserFollowed,
+	unfollowUser,
+} from "../../utils/user-utils";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser } from "../../redux/actions/userAction";
+import RoleEnum from "../../data/roleEnum";
+import Loader from "../common/loader/Loader";
 
 function ProfileData({
 	user,
@@ -12,8 +22,19 @@ function ProfileData({
 	actionMode,
 	onSubmit,
 	registerProfileChange,
+	artistSetter,
 }) {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { isLoggedIn } = useSelector((state) => state.userReducer);
+	const [userFollowed, setUserFollowed] = useState(true); // user load late hota h render pehle hojata h
+
+	useEffect(() => {
+		if (isLoggedIn && user) {
+			const _userFollowed = isUserFollowed(user._id);
+			setUserFollowed(_userFollowed);
+		}
+	}, [isLoggedIn, user]);
 
 	return (
 		<div>
@@ -46,11 +67,48 @@ function ProfileData({
 										</button>
 									</div>
 								) : (
-									<button className="border-2 border-maroonRed rounded-lg py-2 px-4 text-sm font-semibold text-maroonRed">
-										Follow
-									</button>
+									<>
+										{user.role === RoleEnum.ARTIST ? (
+											<>
+												{userFollowed ? (
+													<button
+														className="border-2 border-maroonRed rounded-lg py-2 px-4 text-sm font-semibold text-maroonRed"
+														onClick={async (e) => {
+															await unfollowUser(user._id);
+															if (isLoggedIn) {
+																setUserFollowed(false);
+																await artistSetter(user._id);
+																dispatch(loadUser());
+															}
+														}}
+													>
+														Unfollow
+													</button>
+												) : (
+													<button
+														className="border-2 border-maroonRed rounded-lg py-2 px-4 text-sm font-semibold text-maroonRed"
+														onClick={async (e) => {
+															await followUser(user._id);
+															if (isLoggedIn) {
+																setUserFollowed(true);
+																await artistSetter(user._id);
+																dispatch(loadUser());
+															}
+														}}
+													>
+														Follow
+													</button>
+												)}
+											</>
+										) : (
+											<></>
+										)}
+									</>
 								)}
-								<button className="border-2 border-maroonRed rounded-lg mx-2 text-maroonRed ">
+								<button
+									className="border-2 border-maroonRed rounded-lg mx-2 text-maroonRed "
+									onClick={handleCopyUrl}
+								>
 									<FaShareAlt className="text-md rounded-md m-2 cursor-pointer" />
 								</button>
 							</div>

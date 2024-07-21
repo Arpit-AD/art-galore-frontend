@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../logo/Logo";
 import ResponsiveNav from "./responsive-nav/ResponsiveNav";
 import { RiAccountCircleFill } from "react-icons/ri";
 import CategoryList from "../common/category-list/CategoryList";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RiLogoutCircleFill } from "react-icons/ri";
 import { logout } from "../../redux/actions/userAction";
@@ -11,11 +11,13 @@ import { logout } from "../../redux/actions/userAction";
 const Navbar = () => {
 	const [responsiveNav, setResponsiveNav] = useState(false);
 	const { isLoggedIn } = useSelector((state) => state.userReducer);
+	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const toggleNavbar = () => {
 		setResponsiveNav((prev) => !prev);
 	};
+
 	return (
 		<nav className="lg:max-h-28 max-h-24 sticky top-0 text-dark shadow shadow-gray-300 bg-gray-50 lg:text-base sm:text-sm text-xs z-10">
 			<div className="z-10 p-2 lg:block flex items-center justify-between ">
@@ -45,7 +47,9 @@ const Navbar = () => {
 					) : (
 						<div className="flex">
 							<RiAccountCircleFill
-								className=" text-3xl cursor-pointer hover:text-maroonRed mx-2"
+								className={`text-3xl cursor-pointer hover:text-maroonRed mx-2 ${
+									pathname.endsWith("/profile") ? "text-maroonRed" : ""
+								}`}
 								onClick={() => {
 									navigate("/profile");
 								}}

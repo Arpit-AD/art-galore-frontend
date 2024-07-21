@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductList from "../../components/common/product-list/ProductList";
 import { getProduct } from "../../redux/actions/productActions";
 import { updateUser } from "../../redux/actions/userAction";
-import { getArtists } from "../../redux/actions/artristAction";
 import { Helmet } from "react-helmet";
 import Loader from "../../components/common/loader/Loader";
+import RoleEnum from "../../data/roleEnum";
 
 function ProfilePage({ personalProfile }) {
 	const dispatch = useDispatch();
@@ -18,15 +18,16 @@ function ProfilePage({ personalProfile }) {
 	const { actionMode } = useSelector((state) => state.pageReducer);
 	const { artists } = useSelector((state) => state.artistReducer);
 	const { products } = useSelector((state) => state.productReducer);
-	const { user } = useSelector((state) => state.userReducer);
+	const { loading, user } = useSelector((state) => state.userReducer);
 	const [userData, setUserData] = useState(null);
 	const [artistPage, setArtistPage] = useState(false);
 	const [artworks, setArtworks] = useState([]);
 	const [avatar, setAvatar] = useState(null);
-	const artistSetter = async () => {
-		const data = await getUserData(id);
+
+	const artistSetter = async (_id) => {
+		const data = await getUserData(_id);
 		setUserData(data?.user);
-		if (data?.user?.role === "artist") setArtistPage(true);
+		if (data?.user?.role === RoleEnum.ARTIST) setArtistPage(true);
 	};
 
 	const updateFormSubmit = (e) => {
@@ -40,8 +41,6 @@ function ProfilePage({ personalProfile }) {
 		}
 
 		dispatch(updateUser(__userData));
-		// dispatch(getArtists());
-
 		navigate("/profile");
 	};
 
@@ -60,17 +59,14 @@ function ProfilePage({ personalProfile }) {
 	};
 
 	useEffect(() => {
-		if (id) {
-			if (artists && artists?.length) {
-				const artistData = artists?.filter((data) => id === data._id)[0];
-				setUserData(artistData);
-				if (artistData?.role === "artist") setArtistPage(true);
-			} else artistSetter();
-		}
 		if (!(products && products?.length)) {
 			dispatch(getProduct());
 		}
-	}, [id, artists, artistPage]);
+	}, [artists, artistPage]);
+
+	useEffect(() => {
+		if (id) artistSetter(id);
+	}, [id]);
 
 	useEffect(() => {
 		if (products && (id || userData)) {
@@ -88,7 +84,7 @@ function ProfilePage({ personalProfile }) {
 	useEffect(() => {
 		if (personalProfile && user) {
 			setUserData(user?.user);
-			if (user?.user?.role === "artist") setArtistPage(true);
+			if (user?.user?.role === RoleEnum.ARTIST) setArtistPage(true);
 		}
 	}, [personalProfile, user]);
 
@@ -107,7 +103,11 @@ function ProfilePage({ personalProfile }) {
 				<title>{userData ? userData?.name : "Proile Page"}</title>
 			</Helmet>
 			<div className="mt-12 mb-6 flex align-center justify-between font-semibold  lg:text-3xl sm:text-2xl text-xl xl:px-0 px-4">
-				ARTIST PROFILE
+				{personalProfile
+					? "YOUR PROFILE"
+					: userData && userData.role === RoleEnum.ARTIST
+					? "ARTIST PROFILE"
+					: "USER PROFILE"}
 			</div>
 			<div>
 				<ProfileData
@@ -119,6 +119,7 @@ function ProfilePage({ personalProfile }) {
 					avatarPreview={avatar}
 					onSubmit={updateFormSubmit}
 					registerProfileChange={registerProfileChange}
+					artistSetter={artistSetter}
 				/>
 			</div>
 			{artistPage ? (

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import RoleEnum from "../../data/roleEnum";
 
 const RegisterForm = ({
 	avatarPreview,
@@ -107,7 +108,7 @@ const RegisterForm = ({
 								id="artist"
 								value="artist"
 								onChange={handleUserTypeChange}
-								checked={userType === "artist"}
+								checked={userType === RoleEnum.ARTIST}
 							/>
 							<label className="text-sm" htmlFor="artist">
 								Artist

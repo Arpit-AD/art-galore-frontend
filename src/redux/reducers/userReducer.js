@@ -1,6 +1,9 @@
 import UserConstants from "../constants/userConstants.js";
 
-export const userReducer = (state = { user: [] }, action) => {
+export const userReducer = (
+	state = { user: [], isLoggedIn: false },
+	action,
+) => {
 	switch (action.type) {
 		case UserConstants.LOGIN_REQUEST:
 		case UserConstants.REGISTER_USER_REQUEST:
@@ -14,13 +17,13 @@ export const userReducer = (state = { user: [] }, action) => {
 		case UserConstants.LOGOUT_FAIL:
 		case UserConstants.LOAD_USER_SUCCESS:
 		case UserConstants.UPDATE_PROFILE_SUCCESS: {
-			const userData = {
+			const _userData = {
 				...state,
 				loading: false,
 				isLoggedIn: true,
 				user: action.payload,
 			};
-			return userData;
+			return _userData;
 		}
 		case UserConstants.UPDATE_PROFILE_FAILURE:
 			return { ...state, loading: false, isLoggedIn: true };
@@ -29,7 +32,7 @@ export const userReducer = (state = { user: [] }, action) => {
 				...state,
 				loading: false,
 				isLoggedIn: false,
-				userData: null,
+				user: null,
 			};
 		case UserConstants.LOGIN_FAIL:
 		case UserConstants.REGISTER_USER_FAIL:
@@ -37,7 +40,7 @@ export const userReducer = (state = { user: [] }, action) => {
 				...state,
 				loading: false,
 				isLoggedIn: false,
-				userData: null,
+				user: null,
 				error: action.payload,
 			};
 		case UserConstants.LOGOUT_SUCCESS: {

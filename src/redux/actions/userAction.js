@@ -23,6 +23,7 @@ export const login = (userData) => async (dispatch) => {
 			draggable: true,
 			progress: undefined,
 			theme: "light",
+			className: "my-toast",
 		});
 		localStorage.setItem("token", response.data.token);
 		dispatch({ type: UserConstants.LOGIN_SUCCESS, payload: response.data });
@@ -45,7 +46,7 @@ export const register = (userData) => async (dispatch) => {
 			userData,
 			config,
 		);
-
+		localStorage.setItem("token", data.token);
 		toast.success("Registration Successful", {
 			position: "top-left",
 			autoClose: 5000,
@@ -55,6 +56,7 @@ export const register = (userData) => async (dispatch) => {
 			draggable: true,
 			progress: undefined,
 			theme: "light",
+			className: "my-toast",
 		});
 
 		dispatch({ type: UserConstants.REGISTER_USER_SUCCESS, payload: data });
@@ -84,6 +86,7 @@ export const logout = () => async (dispatch) => {
 			draggable: true,
 			progress: undefined,
 			theme: "light",
+			className: "my-toast",
 		});
 
 		dispatch({ type: UserConstants.LOGOUT_SUCCESS });
@@ -132,9 +135,10 @@ export const updateUser = (userData) => async (dispatch) => {
 			pauseOnHover: true,
 			draggable: true,
 			progress: undefined,
+			className: "my-toast",
 			theme: "light",
 		});
-		dispatch({ type: UserConstants.REGISTER_USER_SUCCESS, payload: data });
+		dispatch({ type: UserConstants.UPDATE_PROFILE_SUCCESS, payload: data });
 	} catch (error) {
 		toast.error("Profile update failed", {
 			position: "top-left",
@@ -144,6 +148,7 @@ export const updateUser = (userData) => async (dispatch) => {
 			pauseOnHover: true,
 			draggable: true,
 			progress: undefined,
+			className: "my-toast",
 			theme: "light",
 		});
 		dispatch({
