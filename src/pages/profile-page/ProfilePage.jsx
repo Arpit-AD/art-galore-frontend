@@ -29,7 +29,7 @@ function ProfilePage({ personalProfile }) {
 		setUserData(data?.user);
 		if (data?.user?.role === RoleEnum.ARTIST) setArtistPage(true);
 	};
-
+	useEffect(() => {}, [userData]);
 	const updateFormSubmit = (e) => {
 		e.preventDefault();
 		const formData = new FormData(updateForm.current);
@@ -111,7 +111,7 @@ function ProfilePage({ personalProfile }) {
 			</div>
 			<div>
 				<ProfileData
-					user={userData}
+					userData={userData}
 					form={updateForm}
 					artistPage={artistPage}
 					personalProfile={personalProfile}

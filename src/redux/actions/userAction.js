@@ -158,6 +158,90 @@ export const updateUser = (userData) => async (dispatch) => {
 	}
 };
 
+export const followUser = (followUserId) => async (dispatch) => {
+	try {
+		dispatch({ type: UserConstants.FOLLOW_USER_REQUEST });
+
+		const response = await axiosInstance.put(
+			`${BACKEND_URL}/api/v1/user/follow`,
+			{ followUserId },
+		);
+		toast.success(response.data.message, {
+			position: "top-left",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+			className: "my-toast",
+		});
+		dispatch({
+			type: UserConstants.FOLLOW_USER_SUCCESS,
+			payload: { success: true, user: response.data.user },
+		});
+	} catch (err) {
+		toast.error(err.response.data.message, {
+			position: "top-left",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+			className: "my-toast",
+		});
+		dispatch({
+			type: UserConstants.FOLLOW_USER_FAILURE,
+			payload: err.response.data?.message,
+		});
+	}
+};
+
+export const unfollowUser = (unfollowUserId) => async (dispatch) => {
+	try {
+		dispatch({ type: UserConstants.UNFOLLOW_USER_REQUEST });
+
+		const response = await axiosInstance.put(
+			`${BACKEND_URL}/api/v1/user/unfollow`,
+			{ unfollowUserId },
+		);
+		toast.success(response.data.message, {
+			position: "top-left",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+			className: "my-toast",
+		});
+		dispatch({
+			type: UserConstants.UNFOLLOW_USER_SUCCESS,
+			payload: { success: true, user: response.data.user },
+		});
+	} catch (err) {
+		toast.error(err.response.data.message, {
+			position: "top-left",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+			className: "my-toast",
+		});
+		dispatch({
+			type: UserConstants.UNFOLLOW_USER_FAILURE,
+			payload: err.response.data?.message,
+		});
+	}
+};
+
 export const clearErrors = () => async (dispatch) => {
 	dispatch({
 		type: UserConstants.CLEAR_ERRORS,
