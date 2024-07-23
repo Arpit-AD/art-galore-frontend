@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { formatNumberToINR } from "../../utils/products-utils";
+import { handleCopyUrl } from "../../utils/common-utils";
 import { FaCopy, FaHeart, FaShoppingCart } from "react-icons/fa";
-import { toast } from "react-toastify";
 import ReactStars from "react-rating-stars-component";
 import ArtistCard_II from "../common/artist-card-ii/ArtistCard_II";
 import Loader from "../common/loader/Loader";
@@ -22,18 +22,7 @@ function ProductDetails({ create, productData }) {
 	const [starKey, setStarKey] = useState(0);
 	const { products } = useSelector((state) => state.productReducer);
 	const [productList, setProductList] = useState([]);
-	const handleCopyUrl = () => {
-		const url = window.location.href;
-		navigator.clipboard
-			.writeText(url)
-			.then(() => {
-				toast.success("URL copied to clipboard!");
-			})
-			.catch((err) => {
-				toast.error("Failed to copy URL.");
-				console.error("Failed to copy: ", err);
-			});
-	};
+
 	useEffect(() => {
 		if (productData) {
 			setStarKey(Math.random() * 100);
@@ -45,6 +34,16 @@ function ProductDetails({ create, productData }) {
 			dispatch(getProduct());
 		}
 	}, []);
+
+	useEffect(() => {
+		if (products && products.length && productData) {
+			const filterProducts = products.filter(
+				(product) =>
+					product.user === productData.user && product._id !== productData._id,
+			);
+			setProductList(filterProducts);
+		}
+	}, [products, productData]);
 
 	const getOptions = () => {
 		const opt = {
@@ -91,17 +90,17 @@ function ProductDetails({ create, productData }) {
 											productData?.price ? productData.price : 0,
 										)}
 									</div>
-									<div className="sm:flex text-center">
+									<div className="sm:flex text-center items-center sm:mt-0 mt-3">
 										<button
-											className="border-2 rounded-lg py-2 px-6 font-semibold text-gray-500 border-gray-300 bg-white mx-1"
+											className="border-2 rounded-lg px-6 sm:py-3 py-2 font-semibold text-gray-500 border-gray-300 bg-white mx-1"
 											onClick={handleCopyUrl}
 										>
 											<FaCopy className="m-auto" />
 										</button>
-										<button className="border-2 rounded-lg py-2 px-6 font-semibold text-gray-500 border-gray-300 bg-white mx-1">
+										<button className="border-2 rounded-lg px-6 sm:py-3 py-2 font-semibold text-gray-500 border-gray-300 bg-white mx-1">
 											<FaHeart className="m-auto" />
 										</button>
-										<button className=" mt-3 border-2 border-maroonRed rounded-lg sm:py-2 py-1 sm:px-6 px-2 font-semibold bg-maroonRed text-white mx-1">
+										<button className=" border-2 border-maroonRed rounded-lg sm:py-2 py-1 sm:px-6 px-2 font-semibold bg-maroonRed text-white mx-1">
 											<div className="flex">
 												<FaShoppingCart className="m-auto" />{" "}
 												<span className="ml-2">Buy</span>
@@ -167,7 +166,7 @@ function ProductDetails({ create, productData }) {
 						</div>
 						<hr className="my-1" />
 						<hr className="my-1" />
-						<div className="my-8">
+						<div className="my-8 mx-2">
 							<div className="md:text-xl text-base font-semibold underline">
 								Other products from artist
 							</div>

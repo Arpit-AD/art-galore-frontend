@@ -74,6 +74,7 @@ function LoginRegisterPage() {
 				pauseOnHover: true,
 				draggable: true,
 				progress: undefined,
+				className: "my-toast",
 				theme: "light",
 				// transition: Bounce,
 			});
