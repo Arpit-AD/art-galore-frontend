@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { formatNumberToINR } from "../../utils/products-utils";
+import {
+	wishlist_buttonClicked,
+	formatNumberToINR,
+	isProductLiked,
+	getRatingValue,
+} from "../../utils/products-utils";
 import { handleCopyUrl } from "../../utils/common-utils";
 import { FaCopy, FaHeart, FaShoppingCart } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
@@ -8,6 +13,8 @@ import Loader from "../common/loader/Loader";
 import ProductList from "../common/product-list/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../../redux/actions/productActions";
+import ReviewList from "../common/review-list/ReviewList";
+import ReviewForm from "../review-form/ReviewForm";
 
 const formatDate = (isoDate) => {
 	const date = new Date(isoDate);
@@ -21,13 +28,23 @@ function ProductDetails({ create, productData }) {
 	const dispatch = useDispatch();
 	const [starKey, setStarKey] = useState(0);
 	const { products } = useSelector((state) => state.productReducer);
+	const { user, isLoggedIn } = useSelector((state) => state.userReducer);
 	const [productList, setProductList] = useState([]);
+	const [likedProduct, setLikedProduct] = useState(
+		isProductLiked(productData?._id),
+	);
 
 	useEffect(() => {
 		if (productData) {
 			setStarKey(Math.random() * 100);
 		}
 	}, [productData]);
+
+	useEffect(() => {
+		if (user && productData) {
+			setLikedProduct(isProductLiked(productData._id));
+		}
+	}, [user, productData]);
 
 	useEffect(() => {
 		if (!(products && products?.length)) {
@@ -41,7 +58,7 @@ function ProductDetails({ create, productData }) {
 				(product) =>
 					product.user === productData.user && product._id !== productData._id,
 			);
-			setProductList(filterProducts);
+			setProductList(filterProducts.slice(0, 6));
 		}
 	}, [products, productData]);
 
@@ -52,7 +69,7 @@ function ProductDetails({ create, productData }) {
 			color: "rgba(20,20,20,0.1)",
 			activeColor: "tomato",
 			size: window.innerWidth < 600 ? 17 : window.innerWidth < 1000 ? 20 : 25,
-			value: productData?.numberOfReviews,
+			value: getRatingValue(productData?.reviews),
 			isHalf: true,
 		};
 		return opt;
@@ -77,7 +94,7 @@ function ProductDetails({ create, productData }) {
 						alt=""
 						className="mb-8 mx-auto"
 					/>
-					<div className="lg:m-0 sm:mx-4 mx-2">
+					<div className="xl:m-0 sm:mx-4 mx-2">
 						<div>
 							<div className="my-8 sm:text-left text-center">
 								<div className="md:text-3xl md:text-2xl text-xl font-semibold">
@@ -97,8 +114,19 @@ function ProductDetails({ create, productData }) {
 										>
 											<FaCopy className="m-auto" />
 										</button>
-										<button className="border-2 rounded-lg px-6 sm:py-3 py-2 font-semibold text-gray-500 border-gray-300 bg-white mx-1">
-											<FaHeart className="m-auto" />
+										<button
+											className={`border-2 rounded-lg px-6 sm:py-3 py-2 font-semibold text-gray-500 border-gray-300 bg-white mx-1 ${
+												likedProduct ? "border-maroonRed" : ""
+											}`}
+											onClick={() => {
+												wishlist_buttonClicked(productData?._id, likedProduct);
+											}}
+										>
+											<FaHeart
+												className={`m-auto ${
+													likedProduct ? "text-maroonRed" : ""
+												}`}
+											/>
 										</button>
 										<button className=" border-2 border-maroonRed rounded-lg sm:py-2 py-1 sm:px-6 px-2 font-semibold bg-maroonRed text-white mx-1">
 											<div className="flex">
@@ -162,6 +190,15 @@ function ProductDetails({ create, productData }) {
 									Description
 								</div>
 								<p className="my-4">{productData?.description}</p>
+							</div>
+							<hr className="my-1" />
+							<hr className="my-1" />
+							<div>
+								{isLoggedIn ? <ReviewForm /> : <></>}
+								<ReviewList
+									productId={productData?._id}
+									message={"No Reviews Yet"}
+								/>
 							</div>
 						</div>
 						<hr className="my-1" />

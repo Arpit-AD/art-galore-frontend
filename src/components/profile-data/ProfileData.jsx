@@ -33,7 +33,6 @@ function ProfileData({
 	useEffect(() => {
 		if (userData && user) {
 			const _userFollowed = isUserFollowed(userData._id);
-			console.log(_userFollowed, "uf");
 			setUserFollowed(_userFollowed);
 		}
 	}, [userData, user]);

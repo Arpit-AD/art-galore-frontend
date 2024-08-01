@@ -10,12 +10,14 @@ import { getProduct } from "../../redux/actions/productActions.js";
 import ColorComponent from "../../components/color-component/ColorComponent.jsx";
 import { arrayToObjectByKey } from "../../utils/products-utils.js";
 import CategoryComponent from "../../components/common/category-component/CategoryComponent.jsx";
+import Loader from "../../components/common/loader/Loader.jsx";
 function Home() {
 	const navigate = useNavigate();
 	const [filter, setFilter] = useState(null);
 	const [productList, setProductList] = useState([]);
 	const [categoryObj, setCategoryObj] = useState({});
 	const { products } = useSelector((state) => state.productReducer);
+	const { loading } = useSelector((state) => state.userReducer);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -29,6 +31,14 @@ function Home() {
 			setProductList(products);
 		}
 	}, [products]);
+
+	if (loading)
+		return (
+			<div className="h-screen">
+				{" "}
+				<Loader loading={loading} />{" "}
+			</div>
+		);
 
 	return (
 		<div className="bg-white min-h-screen m-1">

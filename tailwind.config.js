@@ -3,6 +3,9 @@ module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
 	theme: {
 		extend: {
+			boxShadow: {
+				right: "inset -10px 0 10px -10px rgba(0, 0, 0, 0.5)",
+			},
 			colors: {
 				maroonRed: "#7f0a19",
 				dark: "#666666",
