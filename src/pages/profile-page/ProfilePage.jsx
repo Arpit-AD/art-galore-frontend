@@ -29,6 +29,7 @@ function ProfilePage({ personalProfile }) {
 		setUserData(data?.user);
 		if (data?.user?.role === RoleEnum.ARTIST) setArtistPage(true);
 	};
+
 	useEffect(() => {}, [userData]);
 	const updateFormSubmit = (e) => {
 		e.preventDefault();

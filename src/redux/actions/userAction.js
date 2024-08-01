@@ -242,6 +242,70 @@ export const unfollowUser = (unfollowUserId) => async (dispatch) => {
 	}
 };
 
+export const addToWishlist = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: UserConstants.ADD_TO_WISHLIST_REQUEST });
+
+		const response = await axiosInstance.put(
+			`${BACKEND_URL}/api/v1/user/wishlist/add`,
+			{ productId },
+		);
+
+		dispatch({
+			type: UserConstants.ADD_TO_WISHLIST_SUCCESS,
+			payload: { success: true, user: response.data.user },
+		});
+	} catch (err) {
+		toast.error(err.response.data.message, {
+			position: "top-left",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+			className: "my-toast",
+		});
+		dispatch({
+			type: UserConstants.ADD_TO_WISHLIST_FAILURE,
+			payload: err.response.data?.message,
+		});
+	}
+};
+
+export const removeFromWishlist = (productId) => async (dispatch) => {
+	try {
+		dispatch({ type: UserConstants.REMOVE_FROM_WISHLIST_REQUEST });
+
+		const response = await axiosInstance.put(
+			`${BACKEND_URL}/api/v1/user/wishlist/remove`,
+			{ productId },
+		);
+
+		dispatch({
+			type: UserConstants.REMOVE_FROM_WISHLIST_SUCCESS,
+			payload: { success: true, user: response.data.user },
+		});
+	} catch (err) {
+		toast.error(err.response.data.message, {
+			position: "top-left",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+			className: "my-toast",
+		});
+		dispatch({
+			type: UserConstants.REMOVE_FROM_WISHLIST_FAILURE,
+			payload: err.response.data?.message,
+		});
+	}
+};
+
 export const clearErrors = () => async (dispatch) => {
 	dispatch({
 		type: UserConstants.CLEAR_ERRORS,

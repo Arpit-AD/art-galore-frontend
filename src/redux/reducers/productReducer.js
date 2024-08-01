@@ -1,7 +1,7 @@
 import ProductConstants from "../constants/productConstants";
 
 export const productReducer = (
-	state = { products: [], productsCount: null },
+	state = { products: [], productsCount: null, productReview: false },
 	action,
 ) => {
 	switch (action.type) {
@@ -25,6 +25,16 @@ export const productReducer = (
 			return {
 				...state,
 				error: null,
+			};
+		case ProductConstants.REVIEW_FORM_UPDATED:
+			return {
+				...state,
+				productReview: true,
+			};
+		case ProductConstants.PRODUCT_REVIEW_FETCHED:
+			return {
+				...state,
+				productReview: false,
 			};
 		default:
 			return state;
