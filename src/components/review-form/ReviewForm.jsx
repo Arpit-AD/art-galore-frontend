@@ -48,7 +48,7 @@ function ReviewForm() {
 	};
 
 	return (
-		<div className="justify-center items-center flex mt-5">
+		<div className="justify-center items-center flex mt-5 mx-5">
 			<div
 				className="flex border-2 border-dotted h-32 sm:w-1/3 w-full"
 				onClick={reviewForm}
@@ -59,6 +59,7 @@ function ReviewForm() {
 		</div>
 	);
 }
+
 function ReviewFormDisplay({ display, handleClick }) {
 	const [review, setReview] = useState({ rating: 0, comment: "" });
 

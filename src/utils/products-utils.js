@@ -6,11 +6,36 @@ import axiosInstance, { BACKEND_URL } from "./route-util";
 export const divideListIntoSublists = (list, numSublists) => {
 	const sublists = [];
 	const sublistSize = Math.ceil(list.length / numSublists);
-	for (let i = 0; i < list.length; i += sublistSize) {
-		sublists.push(list.slice(i, i + sublistSize));
+	for (let i = 0; i < list.length; ) {
+		const temp_subList = [];
+
+		for (let j = 0; j < sublistSize; j++) {
+			if (i < list.length) temp_subList.push(list[i]);
+			i++;
+		}
+		sublists.push(temp_subList);
 	}
 
-	return sublists;
+	let flattenedList = [];
+	let i = 0;
+	let j = 0;
+	for (i = 0; i < sublists[j]?.length; i++) {
+		for (; j < numSublists; j++) {
+			if (sublists?.[j]?.[i]) {
+				flattenedList.push(sublists[j][i]);
+			}
+		}
+		j = 0;
+	}
+
+	// Step 2: Create a new matrix and fill it row by row from the flattened list
+
+	let newMatrix = [];
+	for (let i = 0; i < flattenedList.length; i += sublistSize) {
+		newMatrix.push(flattenedList.slice(i, i + sublistSize));
+	}
+
+	return newMatrix;
 };
 
 export const formatNumberToINR = (number) => {

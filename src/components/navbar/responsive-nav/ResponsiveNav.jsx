@@ -9,7 +9,7 @@ function ResponsiveNav({ toggleNavbar, loggedInStatus }) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	return (
-		<span className="lg:hidden flex items-center sm:p-4 float-right space-x-6">
+		<span className="lg:hidden flex items-center sm:p-4 float-right space-x-6 z-20">
 			{loggedInStatus ? (
 				<>
 					<RiLogoutCircleFill

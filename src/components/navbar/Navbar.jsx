@@ -19,8 +19,8 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="lg:max-h-28 max-h-24 sticky top-0 text-dark shadow shadow-gray-300 bg-gray-50 lg:text-base sm:text-sm text-xs z-10">
-			<div className="z-10 p-2 lg:block flex items-center justify-between ">
+		<nav className="lg:max-h-28 max-h-24 sticky top-0 text-dark shadow shadow-gray-300 bg-gray-50 lg:text-base sm:text-sm text-xs z-20">
+			<div className="z-20 p-2 lg:block flex items-center justify-between ">
 				<div className="lg:m-auto p-6 sm:w-fit w-1/2">
 					<Logo width={"180px"} />
 				</div>
