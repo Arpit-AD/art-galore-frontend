@@ -10,6 +10,7 @@ import { loadUser } from "./redux/actions/userAction";
 import ProductPage from "./pages/product-page/ProductPage";
 import ScrollToTop from "./components/scroll-to-top/ScrollToTop";
 import WrapperPage from "./pages/wrapper-page/WrapperPage";
+import AllProductsPage from "./pages/all-product-page/AllProductsPage";
 
 function App() {
 	React.useEffect(() => {
@@ -54,6 +55,10 @@ function App() {
 				<Route
 					path="/profile/:id"
 					element={<WrapperPage Component={ProfilePage} />}
+				/>
+				<Route
+					path="/all-products"
+					element={<WrapperPage Component={AllProductsPage} />}
 				/>
 			</Routes>
 			<ToastContainer

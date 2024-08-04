@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ReviewCard from "../review-card/ReviewCard";
 import { getProductReviews } from "../../../utils/products-utils";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,10 +6,9 @@ import ProductConstants from "../../../redux/constants/productConstants";
 
 const ReviewList = ({ productId, message }) => {
 	const [reviewList, setReviewList] = useState([]);
-	const [isScrollable, setIsScrollable] = useState(false);
-	const [isScrolledToEnd, setIsScrolledToEnd] = useState(false);
 	const { productReview } = useSelector((state) => state.productReducer);
 	const dispatch = useDispatch();
+	const scrollContainerRef = useRef(null);
 
 	const getReviewListData = async () => {
 		const data = await getProductReviews(productId);
@@ -25,19 +24,28 @@ const ReviewList = ({ productId, message }) => {
 		}
 	}, [productId, productReview]);
 
-	const handleScroll = (e) => {
-		const { scrollLeft, scrollWidth, clientWidth } = e.target;
-		setIsScrollable(scrollWidth > clientWidth);
-		setIsScrolledToEnd(scrollLeft + clientWidth >= scrollWidth);
+	const handleScroll = (direction) => {
+		const { current } = scrollContainerRef;
+		if (current) {
+			const scrollAmount = current.clientWidth / 2;
+			current.scrollBy({
+				left: direction === "left" ? -scrollAmount : scrollAmount,
+				behavior: "smooth",
+			});
+		}
 	};
 
 	return (
 		<div className="relative m-4 my-10">
+			<button
+				className="absolute top-1/2 transform -translate-y-1/2 left-0 z-10 bg-gray-200 p-2 rounded-full shadow-md"
+				onClick={() => handleScroll("left")}
+			>
+				&lt;
+			</button>
 			<div
-				className={`overflow-x-auto flex ${
-					isScrollable && !isScrolledToEnd ? "shadow-right" : ""
-				}`}
-				onScroll={handleScroll}
+				ref={scrollContainerRef}
+				className="overflow-x-auto flex space-x-4 p-2"
 				style={{
 					scrollbarWidth: "none",
 					msOverflowStyle: "none",
@@ -55,14 +63,12 @@ const ReviewList = ({ productId, message }) => {
 					</div>
 				)}
 			</div>
-			{isScrollable && (
-				<>
-					<div className="absolute top-0 left-0 w-8 h-full pointer-events-none bg-gradient-to-r from-white to-transparent" />
-					{!isScrolledToEnd && (
-						<div className="absolute top-0 right-0 w-8 h-full pointer-events-none bg-gradient-to-l from-white to-transparent" />
-					)}
-				</>
-			)}
+			<button
+				className="absolute top-1/2 transform -translate-y-1/2 right-0 z-10 bg-gray-200 p-2 rounded-full shadow-md"
+				onClick={() => handleScroll("right")}
+			>
+				&gt;
+			</button>
 		</div>
 	);
 };
