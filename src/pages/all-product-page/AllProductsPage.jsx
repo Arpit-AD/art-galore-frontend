@@ -8,8 +8,15 @@ import { FaSearch } from "react-icons/fa";
 import axiosInstance, { BACKEND_URL } from "../../utils/route-util";
 import { toast } from "react-toastify";
 
+const initialFilter = {
+	priceRange: [1000, 200000],
+	category: [],
+	color: [],
+};
+
 function AllProductsPage() {
 	const { products } = useSelector((state) => state.productReducer);
+
 	const sortOptions = [
 		{ title: "Recommended", name: "recommended" },
 		{ title: "What's New", name: "new" },
@@ -19,6 +26,8 @@ function AllProductsPage() {
 	];
 	const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
 	const [displayProducts, setDisplayProducts] = useState([]);
+	const [filter, setFilter] = useState(window.filter ?? initialFilter);
+
 	const dispatch = useDispatch();
 	const [query, setQuery] = useState("");
 
@@ -28,7 +37,7 @@ function AllProductsPage() {
 				`${BACKEND_URL}/api/v1/products`,
 				{ params: { keyword: query } },
 			);
-			setDisplayProducts(response?.data?._products);
+			handleFilter(response?.data?._products);
 			setSelectedSortOption(sortOptions[0]);
 		} catch (err) {
 			toast.error("No product found", {
@@ -42,6 +51,30 @@ function AllProductsPage() {
 				className: "my-toast",
 				theme: "light",
 			});
+		}
+	};
+
+	const handleFilter = (products) => {
+		if (products) {
+			const productArr = products.filter((product) => {
+				if (
+					product.price >= filter.priceRange[0] &&
+					product.price <= filter.priceRange[1]
+				) {
+					if (
+						filter.category.length === 0 ||
+						filter.category.includes(product.category)
+					) {
+						if (
+							filter.color.length === 0 ||
+							filter.color.includes(product.majorColor)
+						)
+							return product;
+					}
+				}
+			});
+
+			setDisplayProducts(productArr);
 		}
 	};
 
@@ -94,9 +127,9 @@ function AllProductsPage() {
 
 	useEffect(() => {
 		if (products && products.length) {
-			setDisplayProducts(products);
+			handleFilter(products);
 		}
-	}, [products]);
+	}, [products, filter]);
 
 	return (
 		<>
@@ -122,7 +155,7 @@ function AllProductsPage() {
 			</div>
 			<div className="lg:flex block my-4">
 				<div className="lg:w-1/5">
-					<FilterPanel />
+					<FilterPanel filter={filter} setFilter={setFilter} />
 				</div>
 				<div className="lg:w-4/5">
 					<ProductList productList={displayProducts} />

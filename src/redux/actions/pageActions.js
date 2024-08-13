@@ -12,6 +12,17 @@ export const setActionMode = () => async (dispatch) => {
 	}
 };
 
+export const changeTabFn = (tabName) => async (dispatch) => {
+	try {
+		dispatch({
+			type: PageConstant.CHANGE_SELECTED_TAB,
+			payload: { tabName },
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 export const clearErrors = () => async (dispatch) => {
 	dispatch({
 		type: PageConstant.CLEAR_ERRORS,
