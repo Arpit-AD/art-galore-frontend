@@ -11,6 +11,7 @@ import { logout } from "../../redux/actions/userAction";
 const Navbar = () => {
 	const [responsiveNav, setResponsiveNav] = useState(false);
 	const { isLoggedIn } = useSelector((state) => state.userReducer);
+	const { selectedTab } = useSelector((state) => state.pageReducer);
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();

@@ -1,22 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import Filter from "./filter/Filter";
 import { formatNumberToINR } from "../../utils/products-utils";
 import { colorsEnum } from "../../data/colorEnum";
 import CategoryEnum from "../../data/categoryEnum";
 
-const FilterPanel = () => {
-	const [priceRange, setPriceRange] = useState([1000, 200000]);
+const FilterPanel = ({ filter, setFilter }) => {
 	const topColors = colorsEnum.slice(0, 6);
 
 	const handlePriceChange = (event) => {
 		const value = parseInt(event.target.value, 10);
-		const newRange = [...priceRange];
+		const newRange = [...filter.priceRange];
 		if (event.target.name === "minPrice") {
 			newRange[0] = value;
 		} else {
 			newRange[1] = value;
 		}
-		setPriceRange(newRange);
+		setFilter((prev) => ({ ...prev, priceRange: newRange }));
+	};
+
+	const handleCategoryChange = (category) => {
+		let updatedCategories = [...filter.category];
+		if (updatedCategories.includes(category)) {
+			updatedCategories = updatedCategories.filter((item) => item !== category);
+		} else {
+			updatedCategories.push(category);
+		}
+		setFilter((prev) => ({ ...prev, category: updatedCategories }));
+	};
+
+	const handleColorChange = (color) => {
+		let updatedColors = [...filter.color];
+		if (updatedColors.includes(color)) {
+			updatedColors = updatedColors.filter((item) => item !== color);
+		} else {
+			updatedColors.push(color);
+		}
+		setFilter((prev) => ({ ...prev, color: updatedColors }));
 	};
 
 	return (
@@ -24,15 +43,15 @@ const FilterPanel = () => {
 			<Filter title="Price">
 				<div className="flex flex-col">
 					<div className="flex justify-between">
-						<span>₹{formatNumberToINR(priceRange[0])}</span>
-						<span>₹{formatNumberToINR(priceRange[1])}</span>
+						<span>₹{formatNumberToINR(filter.priceRange[0])}</span>
+						<span>₹{formatNumberToINR(filter.priceRange[1])}</span>
 					</div>
 					<input
 						type="range"
 						name="minPrice"
 						min="1000"
 						max="200000"
-						value={priceRange[0]}
+						value={filter.priceRange[0]}
 						className="w-full mt-2"
 						onChange={handlePriceChange}
 					/>
@@ -41,7 +60,7 @@ const FilterPanel = () => {
 						name="maxPrice"
 						min="1000"
 						max="200000"
-						value={priceRange[1]}
+						value={filter.priceRange[1]}
 						className="w-full mt-2"
 						onChange={handlePriceChange}
 					/>
@@ -55,6 +74,8 @@ const FilterPanel = () => {
 								type="checkbox"
 								id={`${CategoryEnum[key]}`}
 								className="mr-2"
+								checked={filter.category.includes(CategoryEnum[key])}
+								onChange={() => handleCategoryChange(CategoryEnum[key])}
 							/>
 							<label htmlFor={`${CategoryEnum[key]}`}>
 								{CategoryEnum[key]}
@@ -67,14 +88,29 @@ const FilterPanel = () => {
 				<ul className="space-y-2">
 					{topColors.map((color, index) => (
 						<li className="flex items-center" key={index}>
-							<input type="checkbox" id={`${color.name}`} className="mr-2" />
+							<input
+								type="checkbox"
+								id={`${color.name}`}
+								className="mr-2"
+								checked={filter.color.includes(color.name)}
+								onChange={() => handleColorChange(color.name)}
+							/>
 							<label htmlFor={`${color.name}`}>{color.name}</label>
 						</li>
 					))}
 				</ul>
 			</Filter>
-			<button className="mt-4 border-2 border-maroonRed rounded-lg py-2 px-8 text-sm font-semibold text-maroonRed">
-				Filter
+			<button
+				className="mt-4 border-2 border-maroonRed rounded-lg py-2 px-8 text-sm font-semibold text-maroonRed"
+				onClick={() =>
+					setFilter({
+						priceRange: [1000, 200000],
+						category: [],
+						color: [],
+					})
+				}
+			>
+				Reset
 			</button>
 		</div>
 	);
