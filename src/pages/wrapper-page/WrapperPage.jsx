@@ -3,8 +3,8 @@ import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 import NewsBanner from "../../components/news-banner/NewsBanner";
 import { useLocation } from "react-router-dom";
-import { setActionMode } from "../../redux/actions/pageActions";
 import { useDispatch } from "react-redux";
+import { setActionMode } from "../../redux/actions/pageActions";
 
 function WrapperPage({ Component, props }) {
 	const { pathname } = useLocation();

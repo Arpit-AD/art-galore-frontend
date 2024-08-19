@@ -8,7 +8,7 @@ const FilterPanel = ({ filter, setFilter }) => {
 	const topColors = colorsEnum.slice(0, 6);
 
 	const handlePriceChange = (event) => {
-		const value = parseInt(event.target.value, 10);
+		const value = parseInt(event.target.value, 10) || 0;
 		const newRange = [...filter.priceRange];
 		if (event.target.name === "minPrice") {
 			newRange[0] = value;
@@ -41,29 +41,31 @@ const FilterPanel = ({ filter, setFilter }) => {
 	return (
 		<div className="text-sm my-2 w-full border border-gray-200 p-4 sm:p-6 lg:p-8 text-center">
 			<Filter title="Price">
-				<div className="flex flex-col">
+				<div className="flex flex-col space-y-2">
+					<div className="flex justify-between">
+						<input
+							type="number"
+							name="minPrice"
+							min="1000"
+							max="200000"
+							value={filter.priceRange[0]}
+							className="border border-gray-300 p-2 w-1/2"
+							onChange={handlePriceChange}
+						/>
+						<input
+							type="number"
+							name="maxPrice"
+							min="1000"
+							max="200000"
+							value={filter.priceRange[1]}
+							className="border border-gray-300 p-2 w-1/2"
+							onChange={handlePriceChange}
+						/>
+					</div>
 					<div className="flex justify-between">
 						<span>₹{formatNumberToINR(filter.priceRange[0])}</span>
 						<span>₹{formatNumberToINR(filter.priceRange[1])}</span>
 					</div>
-					<input
-						type="range"
-						name="minPrice"
-						min="1000"
-						max="200000"
-						value={filter.priceRange[0]}
-						className="w-full mt-2"
-						onChange={handlePriceChange}
-					/>
-					<input
-						type="range"
-						name="maxPrice"
-						min="1000"
-						max="200000"
-						value={filter.priceRange[1]}
-						className="w-full mt-2"
-						onChange={handlePriceChange}
-					/>
 				</div>
 			</Filter>
 			<Filter title="Category">

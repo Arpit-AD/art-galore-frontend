@@ -1,7 +1,8 @@
+import { initialFilter } from "../../pages/all-product-page/AllProductsPage";
 import PageConstant from "../constants/pageConstants";
 
 export const pageReducer = (
-	state = { actionMode: null, selectedTab: null },
+	state = { actionMode: null, filterRx: initialFilter },
 	action,
 ) => {
 	switch (action.type) {
@@ -10,10 +11,10 @@ export const pageReducer = (
 				...state,
 				actionMode: action.payload.actionMode,
 			};
-		case PageConstant.CHANGE_SELECTED_TAB:
+		case PageConstant.CHANGE_FILTER:
 			return {
 				...state,
-				selectedTab: action.payload.tabName,
+				filterRx: action.payload.filter,
 			};
 		case PageConstant.CLEAR_ERRORS:
 			return {
