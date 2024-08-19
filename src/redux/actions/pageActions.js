@@ -12,11 +12,11 @@ export const setActionMode = () => async (dispatch) => {
 	}
 };
 
-export const changeTabFn = (tabName) => async (dispatch) => {
+export const changeFilter = (filter) => async (dispatch) => {
 	try {
 		dispatch({
-			type: PageConstant.CHANGE_SELECTED_TAB,
-			payload: { tabName },
+			type: PageConstant.CHANGE_FILTER,
+			payload: { filter },
 		});
 	} catch (err) {
 		console.log(err);

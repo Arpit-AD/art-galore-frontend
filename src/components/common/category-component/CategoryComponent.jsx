@@ -1,7 +1,7 @@
 import React from "react";
 import CategoryEnum from "../../../data/categoryEnum";
 import { useNavigate } from "react-router-dom";
-import { changeTabFn } from "../../../redux/actions/pageActions";
+import { changeFilter } from "../../../redux/actions/pageActions";
 import { useDispatch } from "react-redux";
 
 function CategoryComponent({ categoryObj }) {
@@ -27,8 +27,7 @@ function CategoryComponent({ categoryObj }) {
 								category: [CategoryEnum[key]],
 								color: [],
 							};
-							window.filter = _filter;
-							dispatch(changeTabFn(CategoryEnum[key]));
+							dispatch(changeFilter(_filter));
 							navigate("/all-products");
 						}}
 					>

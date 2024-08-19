@@ -7,8 +7,9 @@ import { getProduct } from "../../redux/actions/productActions";
 import { FaSearch } from "react-icons/fa";
 import axiosInstance, { BACKEND_URL } from "../../utils/route-util";
 import { toast } from "react-toastify";
+import { changeFilter } from "../../redux/actions/pageActions";
 
-const initialFilter = {
+export const initialFilter = {
 	priceRange: [1000, 200000],
 	category: [],
 	color: [],
@@ -16,7 +17,6 @@ const initialFilter = {
 
 function AllProductsPage() {
 	const { products } = useSelector((state) => state.productReducer);
-
 	const sortOptions = [
 		{ title: "Recommended", name: "recommended" },
 		{ title: "What's New", name: "new" },
@@ -26,7 +26,8 @@ function AllProductsPage() {
 	];
 	const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
 	const [displayProducts, setDisplayProducts] = useState([]);
-	const [filter, setFilter] = useState(window.filter ?? initialFilter);
+	const [filter, setFilter] = useState(initialFilter);
+	const { filterRx } = useSelector((state) => state.pageReducer);
 
 	const dispatch = useDispatch();
 	const [query, setQuery] = useState("");
@@ -130,6 +131,12 @@ function AllProductsPage() {
 			handleFilter(products);
 		}
 	}, [products, filter]);
+
+	useEffect(() => {
+		if (filterRx) {
+			setFilter(filterRx);
+		}
+	}, [filterRx]);
 
 	return (
 		<>

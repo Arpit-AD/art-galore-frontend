@@ -3,10 +3,15 @@ import Logo from "../logo/Logo";
 import playStoreImage from "../../assets/playStore.png";
 import appStoreImage from "../../assets/appStore.png";
 import CategoryList from "../common/category-list/CategoryList";
-import PriceEnum from "../../data/priceEnum";
+import PriceEnum, { priceLimits } from "../../data/priceEnum";
 import AboutEnum from "../../data/aboutEnum";
+import { useNavigate } from "react-router-dom";
+import { changeFilter } from "../../redux/actions/pageActions";
+import { useDispatch } from "react-redux";
 
 function Footer() {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	return (
 		<footer className="bg-gray-100 lg:text-base sm:text-sm text-xs">
 			<div className="xl:w-4/5 m-auto xl:p-auto p-8">
@@ -39,12 +44,24 @@ function Footer() {
 						<div>
 							<ul>
 								<h2 className="pb-3 font-bold">ART BY PRICE</h2>
-								{Object.values(PriceEnum).map((price, i) => (
+								{Object.keys(PriceEnum).map((price, i) => (
 									<li
 										className="lg:leading-7 leading-6 cursor-pointer hover:text-black"
 										key={i}
+										onClick={() => {
+											const _filter = {
+												priceRange: [
+													priceLimits[price].min,
+													priceLimits[price].max,
+												],
+												category: [],
+												color: [],
+											};
+											dispatch(changeFilter(_filter));
+											navigate("/all-products");
+										}}
 									>
-										<a href={`#`}>{price}</a>
+										<a href={`#`}>{PriceEnum[price]}</a>
 									</li>
 								))}
 							</ul>
